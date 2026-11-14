@@ -16,8 +16,9 @@ import board from './board.js';
 import wedge from './wedge.js';
 import fakeout from './fakeout.js';
 import doodle from './doodle.js';
+import pindrop from './pindrop.js';
 
-export const ENGINES = { board, wedge, fakeout, doodle };
+export const ENGINES = { board, wedge, fakeout, doodle, pindrop };
 export const TEAM_DRAW_TIME = 45000;
 export const INTRO_TIME = 14000; // how-to-play screen before each game
 

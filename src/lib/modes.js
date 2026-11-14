@@ -104,10 +104,36 @@ export const MODES = {
       full: { label: 'Full', detail: 'Everyone draws twice · ~16 min', perPlayer: 2, minRounds: 6, maxRounds: 12 },
       tiny: { label: 'Tiny', detail: 'test', perPlayer: 1, minRounds: 1, maxRounds: 1, hidden: true }
     }
+  },
+  pindrop: {
+    id: 'pindrop',
+    steps: [
+      { icon: '🖼️', label: 'A photo of a place' },
+      { icon: '🗺️', label: 'Drop a pin on your map' },
+      { icon: '📏', label: 'Closer = more points', tag: 'up to 1000' },
+      { icon: '🎯', label: 'Last photo counts double' }
+    ],
+    name: 'Pin Drop',
+    icon: '📍',
+    color: '#ff8a1f',
+    tagline: 'Where in the world is this? Drop a pin.',
+    how: [
+      'A photo of a place appears on the big screen.',
+      'Zoom the map on your phone and drop a pin where you think it is.',
+      'The closer your pin, the more points (up to 1000). Halfway through, a hint shows the region.',
+      'In teams, everyone pins and the closest pin counts. The last photo is worth double.'
+    ],
+    min: 1,
+    hostRole: 'The host sees the answer, teases the players and can skip ahead.',
+    lengths: {
+      quick: { label: 'Quick', detail: '5 photos · ~8 min', mix: [2, 2, 1] },
+      full: { label: 'Full', detail: '10 photos · ~15 min', mix: [3, 4, 3] },
+      tiny: { label: 'Tiny', detail: 'test', mix: [1, 0, 0], hidden: true }
+    }
   }
 };
 
-export const MODE_LIST = ['board', 'wedge', 'fakeout', 'doodle'];
+export const MODE_LIST = ['board', 'wedge', 'fakeout', 'doodle', 'pindrop'];
 
 // Setup steps for the How to play page.
 export const SETUP_STEPS = [

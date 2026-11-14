@@ -10,6 +10,7 @@
   import WedgePhone from '../views/phone/WedgePhone.svelte';
   import FakePhone from '../views/phone/FakePhone.svelte';
   import DoodlePhone from '../views/phone/DoodlePhone.svelte';
+  import PinPhone from '../views/phone/PinPhone.svelte';
   import EndPhone from '../views/phone/EndPhone.svelte';
   import StepFlow from '../components/StepFlow.svelte';
   import { MODES } from '../lib/modes.js';
@@ -94,7 +95,7 @@
       if (s.phase === 'answer' && s.current?.buzzer === id) navigator.vibrate?.([80, 40, 80]);
       if (s.phase === 'reveal' && s.current?.result === 'correct' && s.current?.winner === myUnit) { sfx.correct(); navigator.vibrate?.([40, 30, 40, 30, 120]); }
       if (s.phase === 'board' && s.turn === myUnit) navigator.vibrate?.(100);
-      if (['finalBet', 'wq', 'lie', 'pick'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
+      if (['finalBet', 'wq', 'lie', 'pick', 'pguess'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
       if (s.phase === 'dchoose' && s.doodle?.drawer === id) navigator.vibrate?.([100, 50, 100]);
       if (s.phase === 'wreveal' && s.wedge?.winner === myUnit) sfx.correct();
     }
@@ -199,6 +200,8 @@
       <FakePhone {s} {myUnit} {send} {now} {react} />
     {:else if game === 'doodle'}
       <DoodlePhone {s} {id} {avatars} {send} {now} {react} {db} />
+    {:else if game === 'pindrop'}
+      <PinPhone {s} {id} {myUnit} {unit} {send} {now} {react} />
     {/if}
   </main>
 </div>

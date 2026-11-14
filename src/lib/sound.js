@@ -154,5 +154,7 @@ export const sfx = {
     for (const [f, s, d] of seq) { tone(f, s, d, 'square', 0.08); tone(f * 2, s, d, 'triangle', 0.05); }
     [523, 659, 784].forEach((f) => tone(f, 0.92, 0.9, 'sawtooth', 0.04));
   },
-  react: () => tone(900 + Math.random() * 500, 0, 0.08, 'sine', 0.07, 1500)
+  react: () => tone(900 + Math.random() * 500, 0, 0.08, 'sine', 0.07, 1500),
+  // falling whistle + thunk, for a map pin landing
+  pinDrop: () => { tone(1500, 0, 0.32, 'sine', 0.1, 450); tone(170, 0.3, 0.16, 'sine', 0.32, 60); hiss(0.3, 0.08, 0.12, 'lowpass', 1200); }
 };

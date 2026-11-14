@@ -11,6 +11,7 @@
   import WedgeStage from '../views/host/WedgeStage.svelte';
   import FakeStage from '../views/host/FakeStage.svelte';
   import DoodleStage from '../views/host/DoodleStage.svelte';
+  import PinStage from '../views/host/PinStage.svelte';
   import EndView from '../views/host/EndView.svelte';
   import ScoreBar from '../views/host/ScoreBar.svelte';
   import { getDb, isLocal } from '../lib/db.js';
@@ -99,9 +100,10 @@
     finalBet: 'final', finalQ: 'final', finalJudge: 'final', finalReveal: 'final',
     spin: 'board', wq: 'think', wreveal: 'think',
     lie: 'sneaky', pick: 'sneaky', freveal: 'sneaky',
-    dchoose: 'chill', ddraw: 'chill', dreveal: 'chill'
+    dchoose: 'chill', ddraw: 'chill', dreveal: 'chill',
+    pguess: 'think', preveal: 'think'
   };
-  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal']);
+  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal', 'pguess', 'preveal']);
   const count = (o) => Object.keys(o || {}).length;
 
   function react(a, b) {
@@ -151,7 +153,25 @@
         break;
       case 'finalQ': case 'wq': case 'pick': case 'ddraw': sfx.ding(); break;
       case 'finalReveal': sfx.drumroll(2); break;
-      case 'spin': case 'lie': case 'dchoose': sfx.whoosh(); break;
+      case 'spin': case 'lie': case 'dchoose': case 'pguess': sfx.whoosh(); break;
+      case 'preveal': {
+        const p = b.pin;
+        sfx.drumroll(1.1);
+        const n = Object.keys(p.results).length;
+        for (let i = 0; i < n; i++) setTimeout(() => sfx.pinDrop(), 250 + i * 150);
+        const t = 1300 + n * 150;
+        const hits = Object.entries(p.results).filter(([, r]) => r.km <= 25);
+        setTimeout(() => {
+          if (hits.length) {
+            sfx.correct();
+            setTimeout(() => sfx.applause(1.4), 250);
+            fx.confetti(110, ['#ff8a1f', '#ffc400', '#ffffff']);
+            fx.stamp('BULLSEYE!', '#ff8a1f', hits.map(([pid]) => b.players[pid]?.name).join(' & '));
+          } else if (n) sfx.reveal();
+          else sfx.sadTrombone();
+        }, t);
+        break;
+      }
       case 'wreveal': {
         const w = b.wedge;
         const cat = WEDGES[w.spin.to];
@@ -216,6 +236,11 @@
         else { sfx.stamp(); setTimeout(() => sfx.wrong(), 150); }
       }
     }
+    // Pin Drop
+    if (b.pin && a.pin && b.phase === 'pguess' && a.phase === 'pguess') {
+      if (count(b.pin.pins) > count(a.pin.pins)) sfx.bloop();
+      if (b.pin.hint && !a.pin.hint) sfx.reveal();
+    }
     // Doodle Dash
     if (b.doodle && a.doodle && b.phase === 'ddraw' && a.phase === 'ddraw') {
       if (count(b.doodle.guessed) > count(a.doodle.guessed)) sfx.correct();
@@ -235,6 +260,7 @@
       case 'wq': return s.wedge?.until;
       case 'lie': case 'pick': return s.fake?.until;
       case 'ddraw': return s.doodle?.until;
+      case 'pguess': return s.pin?.until;
       default: return null;
     }
   }
@@ -314,6 +340,8 @@
     <FakeStage {s} {avatars} {now} />
   {:else if game === 'doodle'}
     <DoodleStage {s} {avatars} {now} {db} />
+  {:else if game === 'pindrop'}
+    <PinStage {s} {avatars} {now} />
   {/if}
 
   {#if s && !['lobby', 'end', 'teamdraw', 'intro'].includes(s.phase)}

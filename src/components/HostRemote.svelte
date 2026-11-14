@@ -4,6 +4,7 @@
   import ModePicker from './ModePicker.svelte';
   import { MAX_SOLO, TEAMS } from '../lib/room.js';
   import { WEDGES } from '../content/wedges.js';
+  import { photoUrl } from '../engine/pindrop.js';
 
   let { s, send, avatars = {} } = $props();
 
@@ -145,6 +146,19 @@
     </div>
     {#if s.phase !== 'dreveal'}<button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'dchoose' ? 'Pick for them' : 'End round now'}</button>{/if}
 
+  <!-- Pin Drop -->
+  {:else if (s.phase === 'pguess' || s.phase === 'preveal') && s.pin?.answer}
+    {@const f = s.pin}
+    <div class="card stack">
+      <span class="muted">📍 Photo {f.round} of {f.rounds}{f.double ? ' · double points' : ''}</span>
+      <img class="pthumb" src={photoUrl(f.id)} alt="" />
+      <div class="ans">✅ {f.answer.name}</div>
+      <p class="muted">📌 {f.answer.where}</p>
+      <p>💡 {f.answer.fact}</p>
+      {#if s.phase === 'pguess'}<p class="muted">{count(f.pins)} / {players.length} pins dropped{f.hint ? ` · hint shown: ${f.hint}` : ''}</p>{/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'pguess' ? 'Reveal now' : 'Next photo'}</button>
+
   {:else if s.phase === 'end'}
     <div class="card stack center">
       <div class="bigemoji">🏆</div>
@@ -158,6 +172,7 @@
 
 <style>
   .badge { align-self: center; font-size: 1.15rem; }
+  .pthumb { width: 100%; max-height: 180px; object-fit: cover; border-radius: 14px; }
   .row { display: flex; align-items: center; gap: 0.6rem; }
   .row.between { justify-content: space-between; background: var(--well); border-radius: 12px; padding: 0.4rem 0.8rem; }
   .r { margin-left: auto; font-size: 0.9rem; }
