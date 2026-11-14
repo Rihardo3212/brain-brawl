@@ -1,0 +1,44 @@
+/* Shared layout pieces for the phone screens (global, used by several components). */
+.stack { display: flex; flex-direction: column; gap: 0.85rem; }
+.stack > p, .stack > h2, .stack > h3 { margin: 0; }
+.center { align-items: center; text-align: center; }
+.center-text { text-align: center; }
+.wide { width: 100%; }
+.bigemoji { font-size: 4.5rem; filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.25)); }
+.qmini {
+  margin: 0; align-self: center; font-weight: 900; font-size: 1rem;
+  background: var(--surface-hi); border-radius: 999px; padding: 0.3rem 1rem;
+  box-shadow: var(--shine), 0 6px 16px -6px rgba(0, 0, 0, 0.5);
+}
+.answertext {
+  margin: 0; font-family: var(--font-display); font-size: 1.7rem; color: #fff;
+  background: var(--green); border-radius: 999px; padding: 0.15rem 1.4rem 0.25rem;
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--green) 70%, transparent);
+}
+.say { font-family: var(--font-display); font-size: 1.7rem; color: var(--sun); }
+.betval { font-family: var(--font-display); font-size: 3.6rem; color: var(--sun); line-height: 1; text-shadow: 0 8px 20px -6px color-mix(in srgb, var(--sun) 70%, transparent); }
+.slider { width: 100%; accent-color: var(--red); height: 34px; }
+.quick { display: flex; gap: 0.5rem; justify-content: center; }
+
+/* the big arcade buzzer */
+.buzzer {
+  position: relative;
+  width: min(78vw, 330px); aspect-ratio: 1; border-radius: 50%;
+  background: #4a4470;
+  color: #a9a4c9; font-family: var(--font-display); font-size: 2.8rem;
+  border: 14px solid #2b2645;
+  box-shadow: 0 0 0 6px #4a4470, 0 16px 0 #1b1830, 0 26px 40px rgba(0, 0, 0, 0.45), inset 0 -10px 0 rgba(0, 0, 0, 0.25);
+  touch-action: manipulation; transition: transform 0.06s, box-shadow 0.06s, background 0.15s;
+}
+.buzzer span { position: relative; text-shadow: 0 3px 0 rgba(0, 0, 0, 0.3); }
+.buzzer.open {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 0 6px var(--ring), 0 16px 0 #8a0a1e, 0 0 50px rgba(255, 59, 79, 0.6), inset 0 -10px 0 rgba(0, 0, 0, 0.2);
+  animation: ready 0.55s ease-in-out infinite alternate;
+}
+.buzzer.open:active, .buzzer.sent { transform: translateY(14px); box-shadow: 0 0 0 6px var(--ring), 0 2px 0 #8a0a1e; animation: none; }
+.buzzer.early { background: #111 !important; color: #fff !important; animation: shake 0.4s; }
+@keyframes ready { to { box-shadow: 0 0 0 14px rgba(63, 224, 255, 0.5), 0 16px 0 #8a0a1e, 0 0 70px rgba(255, 59, 79, 0.75), inset 0 -10px 0 rgba(0, 0, 0, 0.2); } }
+
+.phone .opt { font-size: 1.2rem; }
