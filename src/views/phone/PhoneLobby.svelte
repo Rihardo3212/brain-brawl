@@ -11,9 +11,20 @@
 </script>
 
 <div class="stack center">
-  <div class="pop-in"><Avatar src={avatars[id]} color={me.color} name={me.name} size={120} crown={s.vip === id && s.mode === 'party'} /></div>
-  <h2>You're in, {me.name}!</h2>
-  <button class="btn ghost small" onclick={onRedraw}>✏️ Redraw</button>
+  {#if isCtrl || n > MAX_SOLO}
+    <!-- compact row, so the game picker / team buttons fit on the screen -->
+    <div class="merow">
+      <div class="pop-in"><Avatar src={avatars[id]} color={me.color} name={me.name} size={64} crown={s.vip === id && s.mode === 'party'} /></div>
+      <div class="mtxt">
+        <h3>You're in, {me.name}!</h3>
+        <button class="btn ghost small" onclick={onRedraw}>✏️ Redraw</button>
+      </div>
+    </div>
+  {:else}
+    <div class="pop-in"><Avatar src={avatars[id]} color={me.color} name={me.name} size={120} crown={s.vip === id && s.mode === 'party'} /></div>
+    <h2>You're in, {me.name}!</h2>
+    <button class="btn ghost small" onclick={onRedraw}>✏️ Redraw</button>
+  {/if}
 
   {#if n > MAX_SOLO}
     <div class="card stack wide">
@@ -40,6 +51,9 @@
 </div>
 
 <style>
+  .merow { display: flex; align-items: center; gap: 0.9rem; text-align: left; }
+  .mtxt { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .mtxt h3 { font-size: 1.3rem; }
   .teams { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
   .tbtn {
     border-radius: 18px; padding: 0.65rem 0.4rem; font-family: var(--font-display); font-size: 0.95rem;
@@ -52,6 +66,10 @@
     color: #fff; border-color: #fff;
     background: var(--c);
     box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--c) 70%, transparent), 0 0 0 3px var(--c);
+  }
+  @media (max-height: 800px) {
+    .tbtn { flex-direction: row; justify-content: center; gap: 0.35rem; padding: 0.4rem 0.3rem; border-radius: 14px; }
+    .tbtn .te { font-size: 1.25rem; }
   }
   .modecard { display: flex; align-items: center; gap: 0.8rem; text-align: left; }
   .modecard b { font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; }

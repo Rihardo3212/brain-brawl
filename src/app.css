@@ -71,6 +71,9 @@
 
 * { box-sizing: border-box; }
 
+/* Phones: no double-tap zoom anywhere (tapping fast on buttons used to zoom the page). */
+html, body, * { touch-action: manipulation; }
+
 html, body {
   margin: 0;
   min-height: 100%;
@@ -84,10 +87,18 @@ html, body {
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 26px 26px;
   background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overscroll-behavior: none;
   transition: background-color 0.3s;
 }
 
-#app { position: relative; min-height: 100vh; }
+#app { position: relative; min-height: 100vh; min-height: 100dvh; }
+
+/* Auto-fit screens (see lib/fit.js): the box is a fixed slot, the inner part gets zoomed if needed. */
+.fit-box { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; }
+.fit-box::-webkit-scrollbar { display: none; }
+.fit-in { flex: 1 0 auto; min-height: 100%; display: flex; flex-direction: column; }
 
 h1, h2, h3, .display {
   margin: 0;

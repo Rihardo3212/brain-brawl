@@ -82,6 +82,7 @@
   <div class="frame" style="--c:{color}">
     <canvas
       bind:this={canvas}
+      data-nofit
       width={SIZE}
       height={SIZE}
       onpointerdown={down}
@@ -118,11 +119,11 @@
     box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--c) 70%, transparent), 0 14px 26px rgba(0, 0, 0, 0.3);
   }
   canvas {
-    display: block; width: min(80vw, 330px); aspect-ratio: 1; background: #fff;
+    display: block; width: min(80vw, 330px, calc(100dvh - 390px)); min-width: 200px; aspect-ratio: 1; background: #fff;
     border-radius: 22px; touch-action: none; box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
   }
   .colors { display: flex; gap: 0.45rem; flex-wrap: wrap; justify-content: center; padding: 0.55rem 0.8rem; border-radius: 999px; }
-  .swatch { width: 32px; height: 32px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.7); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3); transition: transform 0.1s; }
+  .swatch { width: min(32px, 7.4vw); height: min(32px, 7.4vw); border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.7); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3); transition: transform 0.1s; }
   .swatch.on { transform: scale(1.22) translateY(-2px); box-shadow: 0 0 0 3px var(--ring), 0 4px 0 rgba(0, 0, 0, 0.3); }
   .tools { display: flex; gap: 0.5rem; align-items: center; }
   .icon-btn.on { box-shadow: 0 0 0 3px var(--ring), 0 6px 16px -6px rgba(0, 0, 0, 0.5); }

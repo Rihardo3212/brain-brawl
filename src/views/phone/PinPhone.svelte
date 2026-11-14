@@ -65,7 +65,7 @@
         <p class="qmini" class:hot={f.rush > 0}>📍 Photo {f.round} of {f.rounds}{f.double ? ' · ×2' : ''} · ⏱ {secs(f.until)}</p>
         {#if rushed}<p class="rushmsg shake">⏩ {s.players[f.rushBy]?.name || 'Someone'} locked in. Hurry!</p>
         {:else if f.hint}<p class="hint pop-in">🧭 Hint: {f.hint}</p>{/if}
-        <div class="mapbox">
+        <div class="mapbox" data-nofit>
           <PinMap mode="pick" color={unit?.color || me?.color} value={spot} onPick={pick} />
         </div>
         <button class="btn green big block" disabled={!spot} onclick={lock}>
@@ -93,7 +93,7 @@
 <style>
   .wrap { display: flex; flex-direction: column; gap: 0.6rem; }
   .qmini { margin: 0; }
-  .mapbox { height: calc(100dvh - 250px); min-height: 300px; border-radius: 22px; box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.5); }
+  .mapbox { height: calc(100dvh - 260px); min-height: 220px; border-radius: 22px; box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.5); }
   .qmini.hot { color: #ff8a1f; }
   .rushmsg { margin: 0; text-align: center; font-weight: 900; color: #fff; background: #ff8a1f; border-radius: 12px; padding: 0.2rem 0.6rem; }
   .hint { margin: 0; text-align: center; font-weight: 900; color: var(--sun); }

@@ -28,6 +28,7 @@
   import Lewis from '../components/Lewis.svelte';
   import { lewis, setLewisOn, hush } from '../lib/presenter.svelte.js';
   import { lewisReact, lewisHurry } from '../lib/presenter-cues.js';
+  import { fit } from '../lib/fit.js';
 
   let { arg = '' } = $props();
 
@@ -330,6 +331,7 @@
     </div>
   </header>
 
+  <div class="fit-box" use:fit={{ min: 0.45 }}><div class="fit-in">
   {#if !s}
     <div class="center"><h2>Opening room…</h2></div>
   {:else if s.phase === 'lobby'}
@@ -351,6 +353,7 @@
   {:else if game === 'pindrop'}
     <PinStage {s} {avatars} {now} />
   {/if}
+  </div></div>
 
   {#if s && !['lobby', 'end', 'teamdraw', 'intro'].includes(s.phase)}
     <ScoreBar {s} {avatars} {here} />
@@ -369,7 +372,7 @@
 </div>
 
 <style>
-  .screen { min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .screen { height: 100vh; height: 100dvh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 
   /* Game-show stage for questions and rounds */
   .screen.stage {
@@ -396,6 +399,7 @@
   .code b { color: var(--red); letter-spacing: 0.14em; }
   .right { margin-left: auto; display: flex; gap: 0.55rem; align-items: center; }
   .center { flex: 1; display: grid; place-items: center; }
+  .fit-box { overflow: hidden; } /* nobody scrolls a TV: content is zoomed to fit instead */
   .stage .pill { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: none; }
   .stage .footer { color: rgba(255, 255, 255, 0.6); }
 

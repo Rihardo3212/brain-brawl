@@ -65,4 +65,15 @@
   .len span { font-size: 0.75rem; color: var(--muted); }
   .len.on { border-color: var(--ring); }
   .warn { color: var(--sun); margin: 0; font-weight: 900; }
+
+  /* Shorter phones: icon next to the name, no tagline, so the whole picker fits without scrolling. */
+  @media (max-height: 800px) {
+    .picker { gap: 0.6rem; padding: 0.9rem; }
+    .mode { flex-direction: row; justify-content: center; gap: 0.4rem; padding: 0.55rem 0.3rem; border-radius: 16px; }
+    .mi { font-size: 1.35rem; }
+    .mn { font-size: 1rem; }
+    .mt { display: none; }
+    .len { padding: 0.35rem; border-radius: 14px; }
+    .len b { font-size: 1rem; }
+  }
 </style>

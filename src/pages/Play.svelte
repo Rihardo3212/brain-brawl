@@ -19,6 +19,7 @@
   import { normalize, controllerOf } from '../engine/core.js';
   import { sfx, unlockAudio } from '../lib/sound.js';
   import { getTheme, toggleTheme } from '../lib/theme.js';
+  import { fit } from '../lib/fit.js';
 
   let { code: rawCode = '' } = $props();
   // svelte-ignore state_referenced_locally
@@ -122,7 +123,7 @@
     </div>
   </header>
 
-  <main>
+  <main class="fit-box" use:fit={{ min: 0.6 }}><div class="fit-in">
     {#if s === undefined}
       <p class="center-text">Connecting…</p>
 
@@ -203,19 +204,19 @@
     {:else if game === 'pindrop'}
       <PinPhone {s} {id} {myUnit} {unit} {send} {now} {react} />
     {/if}
-  </main>
+  </div></main>
 </div>
 
 <style>
-  .phone { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; user-select: none; }
-  header { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1rem 0.5rem; gap: 0.5rem; }
+  .phone { height: 100vh; height: 100dvh; display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: max(0.7rem, env(safe-area-inset-top)) 1rem 0.4rem; gap: 0.5rem; flex-shrink: 0; }
   header a { text-decoration: none; }
   .hright { display: flex; align-items: center; gap: 0.5rem; }
   .icon-btn.sm { width: 40px; height: 40px; font-size: 1.05rem; }
   .me { display: flex; align-items: center; gap: 0.5rem; background: var(--surface-hi); box-shadow: var(--shine), 0 6px 16px -6px rgba(0, 0, 0, 0.5); border-radius: 999px; padding: 0.25rem 0.3rem 0.25rem 0.9rem; }
   .mname { font-weight: 900; max-width: 7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .mscore { font-family: var(--font-display); background: var(--me); color: #fff; border-radius: 999px; padding: 0.05rem 0.75rem 0.12rem; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2); }
-  main { flex: 1; padding: 0.5rem 1.1rem 1.6rem; display: flex; flex-direction: column; justify-content: center; }
+  .fit-in { padding: 0.4rem 1.1rem max(1rem, env(safe-area-inset-bottom)); justify-content: center; }
   .code { letter-spacing: 0.4em; text-transform: uppercase; }
   .tiny { font-size: 0.85rem; margin: 0; }
 </style>
