@@ -1,6 +1,15 @@
 # Brain Brawl ⚡
 
-A party trivia game. The big screen (laptop or TV) shows the board, and everyone plays on their phone as a buzzer.
+A party quiz game. The big screen (laptop or TV) shows the game, and everyone plays on their phone.
+
+## Game modes
+
+- **🧠 Brain Board**: pick a tile, buzz first, answer fast. Ends with a betting final round.
+- **🥧 Wedge Rush**: spin the wheel, everyone answers at once, the best answer grabs the wedge. Fill your pie to win.
+- **🤥 Fake Out**: write a believable lie for a weird true fact, then try to find the truth.
+- **✏️ Doodle Dash**: one player draws a secret word live, everyone else guesses.
+
+Up to 4 players play solo; with 5 or more, everyone picks a team. The first player is the VIP (picks the game and starts it), or one phone can join as the host.
 
 ## Run it on your computer
 
@@ -9,38 +18,32 @@ npm install
 npm run dev
 ```
 
-Open the address Vite prints (for example `http://localhost:5173`).
+Open the address Vite prints. For phones on the same Wi-Fi, open the "Network" address on the big screen so the QR code works.
 
-Without Firebase the game runs in **local test mode**: the host and the players have to be tabs in the same browser. Open "Host a game" in one tab and the join link in other tabs.
+Without Firebase config the game runs in **local test mode**: host and players have to be tabs in the same browser.
 
-## Set up Firebase (needed for phones)
+## Firebase (needed for phones)
 
-1. Go to https://console.firebase.google.com and create a project (Google Analytics is not needed).
-2. **Build → Realtime Database → Create database.** Pick a location near you and start in **locked mode**.
-3. In the database, open the **Rules** tab, paste the contents of `database.rules.json` and press **Publish**.
-4. **Project settings (gear icon) → Your apps → Web (`</>`)**. Register the app; you don't need Firebase Hosting.
-5. Copy the `firebaseConfig` values into `src/firebase-config.js`. Make sure `databaseURL` is there; if it's missing, copy the URL from the top of the Realtime Database page.
+1. https://console.firebase.google.com → create a project.
+2. **Build → Realtime Database → Create database** (locked mode).
+3. **Rules** tab: paste `database.rules.json`, press **Publish**.
+4. **Project settings → Your apps → Web (`</>`)**, register the app.
+5. Put the config in `src/firebase-config.js` (with `databaseURL`).
 
-These keys are not secret: every web app that uses Firebase has them in its code.
-
-Now restart `npm run dev`. Phones on the same Wi-Fi can open the network address Vite prints (`http://192.168.x.x:5173`) and join.
+These keys are public by design; the database rules decide what is allowed.
 
 ## Publish on GitHub Pages
 
-1. Create a new GitHub repository and push this folder to it (without `node_modules` and `dist`).
-2. Move `deploy.yml` from the project root into a `.github/workflows/` folder (create it), so the path is `.github/workflows/deploy.yml`.
-3. In the repository: **Settings → Pages → Source: GitHub Actions**.
-4. Every push to `main` now builds and publishes the game automatically (see `.github/workflows/deploy.yml`).
+The workflow in `.github/workflows/deploy.yml` builds and publishes on every push to `main`
+(**Settings → Pages → Source: GitHub Actions**).
 
 ## Project layout
 
 - `src/pages/` Home, Host (big screen), Play (phone), How to play
-- `src/components/` board, avatar, drawing pad, logo
-- `src/lib/party.js` the game rules for Party mode (runs on the big screen)
-- `src/lib/questions.js` the question sets
-- `src/lib/db.js` Firebase and local test mode
+- `src/views/host/` big screen views: lobby, team drawing, one stage per mode, end, scoreboard
+- `src/views/phone/` phone views per mode
+- `src/components/` logo, avatar, board, wheel, pie, marquee, live canvas, effects, mode picker…
+- `src/engine/` game rules: `core.js` (lobby, teams, end) and one file per mode
+- `src/content/` questions, Fake Out facts, Doodle words
+- `src/lib/` database, sounds, music, themes, modes, room helpers
 - `src/lib/brand.js` game and developer name
-
-## Next up
-
-Host mode, the final round with bets, teams for 5+ players, more questions.

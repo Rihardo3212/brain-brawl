@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   let { color = '#5b2bd6', onDone, title = 'Draw yourself!' } = $props();
 
-  const COLORS = ['#2d2d2d', '#ff3c28', '#ffb400', '#22c55e', '#0ab9e6', '#8a4fff', '#7a4a2a', '#ffffff'];
+  const COLORS = ['#2b2240', '#ff3b4f', '#ffb400', '#22c55e', '#2f8cff', '#a855f7', '#8b5a2b', '#ffffff'];
   const SIZE = 320; // internal canvas resolution
 
   let canvas;
@@ -79,70 +79,52 @@
 
 <div class="pad">
   <h2 class="on-bg">{title}</h2>
-  <canvas
-    bind:this={canvas}
-    width={SIZE}
-    height={SIZE}
-    style="border-color:{color}"
-    onpointerdown={down}
-    onpointermove={move}
-    onpointerup={up}
-    onpointercancel={up}
-  ></canvas>
+  <div class="frame" style="--c:{color}">
+    <canvas
+      bind:this={canvas}
+      width={SIZE}
+      height={SIZE}
+      onpointerdown={down}
+      onpointermove={move}
+      onpointerup={up}
+      onpointercancel={up}
+    ></canvas>
+  </div>
 
-  <div class="colors">
+  <div class="colors card">
     {#each COLORS as c}
-      <button
-        class="swatch"
-        class:on={pen === c}
-        style="background:{c}"
-        aria-label="color {c}"
-        onclick={() => (pen = c)}
-      ></button>
+      <button class="swatch" class:on={pen === c} style="background:{c}" aria-label="color {c}" onclick={() => (pen = c)}></button>
     {/each}
   </div>
 
   <div class="tools">
     {#each [5, 10, 20] as w}
-      <button class="tool" class:on={width === w} onclick={() => (width = w)} aria-label="brush {w}">
-        <span style="width:{w}px;height:{w}px"></span>
+      <button class="icon-btn" class:on={width === w} onclick={() => (width = w)} aria-label="brush {w}">
+        <span class="dot" style="width:{w}px;height:{w}px"></span>
       </button>
     {/each}
-    <button class="tool text" onclick={undo}>Undo</button>
-    <button class="tool text" onclick={clear}>Clear</button>
+    <button class="btn ghost small" onclick={undo}>↩ Undo</button>
+    <button class="btn ghost small" onclick={clear}>🧽</button>
   </div>
 
-  <button class="btn big block" disabled={empty} onclick={done}>Done!</button>
+  <button class="btn green big block" disabled={empty} onclick={done}>Done!</button>
 </div>
 
 <style>
-  .pad { display: flex; flex-direction: column; gap: 0.8rem; align-items: center; width: 100%; }
+  .pad { display: flex; flex-direction: column; gap: 0.85rem; align-items: center; width: 100%; }
+  .frame {
+    padding: 8px; border-radius: 30px;
+    background: var(--c);
+    box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--c) 70%, transparent), 0 14px 26px rgba(0, 0, 0, 0.3);
+  }
   canvas {
-    width: min(82vw, 340px);
-    aspect-ratio: 1;
-    background: #fff;
-    border-radius: 26px;
-    border: 7px solid;
-    touch-action: none;
-    box-shadow: var(--shadow);
+    display: block; width: min(80vw, 330px); aspect-ratio: 1; background: #fff;
+    border-radius: 22px; touch-action: none; box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
   }
-  .colors {
-    display: flex; gap: 0.45rem; flex-wrap: wrap; justify-content: center;
-    background: #fff; padding: 0.5rem 0.7rem; border-radius: 999px; box-shadow: var(--shadow);
-  }
-  .swatch {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.12);
-    transition: transform 0.1s;
-  }
-  .swatch.on { transform: scale(1.2); box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--ring); }
-  .tools { display: flex; gap: 0.45rem; }
-  .tool {
-    min-width: 44px; height: 44px; border-radius: 14px;
-    background: #fff; color: var(--ink); box-shadow: 0 3px 0 #cfcfcf;
-    display: grid; place-items: center;
-  }
-  .tool span { background: var(--ink); border-radius: 50%; display: block; }
-  .tool.on { box-shadow: 0 0 0 3px var(--ring); }
-  .tool.text { padding: 0 0.8rem; font-weight: 800; }
+  .colors { display: flex; gap: 0.45rem; flex-wrap: wrap; justify-content: center; padding: 0.55rem 0.8rem; border-radius: 999px; }
+  .swatch { width: 32px; height: 32px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.7); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3); transition: transform 0.1s; }
+  .swatch.on { transform: scale(1.22) translateY(-2px); box-shadow: 0 0 0 3px var(--ring), 0 4px 0 rgba(0, 0, 0, 0.3); }
+  .tools { display: flex; gap: 0.5rem; align-items: center; }
+  .icon-btn.on { box-shadow: 0 0 0 3px var(--ring), 0 6px 16px -6px rgba(0, 0, 0, 0.5); }
+  .dot { background: var(--ink); border-radius: 50%; display: block; }
 </style>

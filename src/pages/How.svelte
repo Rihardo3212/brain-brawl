@@ -1,52 +1,48 @@
 <script>
   import Logo from '../components/Logo.svelte';
+  import StepFlow from '../components/StepFlow.svelte';
   import { DEVELOPER } from '../lib/brand.js';
-
-  const steps = [
-    { e: '📺', t: 'Open the game on a big screen', d: 'Laptop, TV or projector. Press "Host a game".' },
-    { e: '📱', t: 'Join with your phone', d: 'Scan the QR code or type the 4-letter room code. Up to 4 players.' },
-    { e: '🎨', t: 'Draw yourself', d: 'Your doodle is your player picture for the whole game.' },
-    { e: '👑', t: 'The VIP starts', d: 'The first player to join picks the game length and starts. The VIP plays too.' },
-    { e: '🎯', t: 'Pick a question', d: 'The player whose turn it is picks a category and points on their phone.' },
-    { e: '🔔', t: 'Buzz!', d: 'Wait for the buzzer to light up. Buzz too early and you are locked for a moment.' },
-    { e: '✅', t: 'Answer fast', d: 'The fastest buzzer picks one of 4 answers. Right = win the points and pick next. Wrong = lose them, and the others can buzz.' },
-    { e: '🏆', t: 'Most points wins', d: 'When the board is empty, the highest score takes the crown.' }
-  ];
+  import { MODES, MODE_LIST, SETUP_STEPS, EXTRAS } from '../lib/modes.js';
 </script>
 
 <main>
-  <a href="#/" class="back"><Logo size={0.6} /></a>
-  <h1 class="on-bg">How to play</h1>
-  <ol>
-    {#each steps as s, i}
-      <li class="card pop-in" style="animation-delay:{i * 60}ms">
-        <span class="e">{s.e}</span>
-        <div>
-          <h3>{s.t}</h3>
-          <p class="muted">{s.d}</p>
-        </div>
-      </li>
-    {/each}
-  </ol>
+  <a href="#/" class="back"><Logo size={0.7} /></a>
+  <h1>How to play</h1>
+
+  <section class="block">
+    <h2>Get set up</h2>
+    <StepFlow steps={SETUP_STEPS} color="var(--red)" />
+    <div class="extras">
+      {#each EXTRAS as x}
+        <span class="extra pill"><span class="icon-tile" style="--sz:36px; --mc:var(--surface-2)">{x.icon}</span>{x.label}</span>
+      {/each}
+    </div>
+  </section>
+
+  {#each MODE_LIST as id}
+    {@const m = MODES[id]}
+    <section class="block" style="--mc:{m.color}">
+      <div class="mhead">
+        <span class="icon-tile" style="--sz:60px">{m.icon}</span>
+        <h2 style="color:{m.color}">{m.name}</h2>
+        {#if m.min > 1}<span class="sticker tilt-r">{m.min}+ players</span>{/if}
+      </div>
+      <StepFlow steps={m.steps} color={m.color} />
+    </section>
+  {/each}
+
   <a class="btn big" href="#/">Let's play</a>
   <footer class="footer">a {DEVELOPER} game</footer>
 </main>
 
 <style>
-  main {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 2rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-  }
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.2rem; display: flex; flex-direction: column; align-items: center; gap: 1.6rem; }
   .back { text-decoration: none; }
-  h1 { font-size: 2.4rem; }
-  ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; width: 100%; }
-  li { display: flex; gap: 1rem; align-items: center; padding: 0.9rem 1.1rem; }
-  .e { font-size: 2.2rem; }
-  h3 { font-size: 1.2rem; }
-  p { margin: 0.15rem 0 0; }
+  h1 { font-size: 3rem; }
+  .block { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1.3rem; padding-top: 0.6rem; }
+  .block h2 { font-size: 2.2rem; }
+  .mhead { display: flex; align-items: center; gap: 0.9rem; }
+  .extras { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+  .extra { padding: 0.3rem 1rem 0.3rem 0.35rem; gap: 0.6rem; font-size: 1.05rem; }
+  .extra .icon-tile { transform: none; box-shadow: none; }
 </style>

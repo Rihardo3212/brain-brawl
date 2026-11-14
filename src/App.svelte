@@ -18,7 +18,7 @@
 </script>
 
 {#if route.page === 'host'}
-  <Host />
+  <Host arg={route.arg} />
 {:else if route.page === 'join'}
   {#key route.arg}
     <Play code={route.arg} />

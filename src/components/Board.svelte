@@ -1,11 +1,11 @@
 <script>
-  // The question board. Used big on the main screen and small on the picking phone.
-  let { board, onPick = null, compact = false, highlight = null } = $props();
+  // The question board. Big on the main screen, compact on the picking phone.
+  let { board, onPick = null, compact = false, intro = false } = $props();
 </script>
 
-<div class="board" class:compact style="--cols:{board.cats.length}">
-  {#each board.cats as cat}
-    <div class="cat">
+<div class="board" class:compact class:intro style="--cols:{board.cats.length}">
+  {#each board.cats as cat, c}
+    <div class="cat" style="--d:{c * 90}ms">
       <span class="icon">{cat.icon}</span>
       <span class="name">{cat.name}</span>
     </div>
@@ -14,13 +14,13 @@
     {#each board.cats as _, c}
       {@const used = board.used[`${c}-${r}`]}
       <button
+        style="--d:{(c + r) * 70 + 300}ms"
         class="cell"
         class:used
-        class:hl={highlight && highlight.c === c && highlight.r === r}
         disabled={used || !onPick}
         onclick={() => onPick && onPick(c, r)}
       >
-        {used ? '' : (r + 1) * 100}
+        {#if !used}<span>{(r + 1) * 100}</span>{/if}
       </button>
     {/each}
   {/each}
@@ -30,45 +30,54 @@
   .board {
     display: grid;
     grid-template-columns: repeat(var(--cols), 1fr);
-    gap: 0.75rem;
+    gap: 0.8rem;
     width: 100%;
+    perspective: 900px;
   }
   .cat {
+    position: relative;
     background: var(--red);
     color: #fff;
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 0.6rem 0.4rem;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-    min-height: 5.5rem;
-    box-shadow: 0 5px 0 var(--red-dark);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.15rem;
+    min-height: 5.6rem;
+    box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--red) 75%, transparent);
   }
-  .icon { font-size: 1.9rem; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.2)); }
-  .name { font-weight: 900; font-size: 1.05rem; line-height: 1.1; }
+  .icon { font-size: 1.9rem; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.25)); }
+  .name { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.05; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25); }
+
+  /* flat blue tiles with a soft glow */
   .cell {
-    background: #fff;
-    border-radius: 18px;
-    font-size: 2.3rem;
-    font-weight: 900;
-    color: var(--blue);
-    min-height: 5rem;
-    box-shadow: 0 5px 0 #cfcfcf, var(--shadow);
-    transition: transform 0.1s;
+    position: relative;
+    border-radius: 20px;
+    min-height: 5.2rem;
+    background: var(--blue);
+    box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--blue) 80%, transparent);
+    transition: transform 0.15s cubic-bezier(0.3, 1.6, 0.5, 1), box-shadow 0.15s;
+    overflow: hidden;
+  }
+  .cell span {
+    position: relative;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.18);
   }
   .cell:disabled { cursor: default; }
-  .cell:not(:disabled):hover { animation: ring 0.9s ease-in-out infinite alternate; }
-  .cell:not(:disabled):active { transform: translateY(4px); box-shadow: 0 1px 0 #cfcfcf; }
-  .cell.used { background: rgba(0, 0, 0, 0.06); box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.08); }
-  .cell.hl { animation: pulse 0.5s ease infinite alternate; }
-  @keyframes pulse { to { transform: scale(1.08); } }
+  .cell:not(:disabled):hover { transform: translateY(-4px); box-shadow: 0 16px 28px -8px color-mix(in srgb, var(--blue) 85%, transparent); }
+  .cell:not(:disabled):active { transform: scale(0.95); }
+  .cell.used { background: var(--well); box-shadow: none; }
 
-  .compact { gap: 0.35rem; }
-  .compact .cat { min-height: 3.4rem; border-radius: 12px; padding: 0.3rem 0.15rem; box-shadow: 0 3px 0 var(--red-dark); }
+  .intro .cat, .intro .cell { animation: flip-in 0.55s cubic-bezier(0.2, 1.4, 0.4, 1) both; animation-delay: var(--d); }
+  @keyframes flip-in { from { transform: rotateX(-95deg) scale(0.8); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  .compact { gap: 0.4rem; }
+  .compact .cat { min-height: 3.6rem; border-radius: 13px; padding: 0.3rem 0.15rem; box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--red) 70%, transparent); }
   .compact .icon { font-size: 1.1rem; }
-  .compact .name { font-size: 0.62rem; }
-  .compact .cell { font-size: 1.1rem; min-height: 3.2rem; border-radius: 12px; box-shadow: 0 3px 0 #cfcfcf; }
+  .compact .name { font-size: 0.68rem; }
+  .compact .cell { min-height: 3.3rem; border-radius: 13px; box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--blue) 70%, transparent); }
+  .compact .cell span { font-size: 1.2rem; }
 </style>
