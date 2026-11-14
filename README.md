@@ -1,6 +1,6 @@
-# Brain Brawl ⚡
+# Party Pit 🎉
 
-A party quiz game. The big screen (laptop or TV) shows the game, and everyone plays on their phone.
+A party game for friends. The big screen (laptop or TV) shows the game, and everyone plays on their phone.
 
 ## Game modes
 

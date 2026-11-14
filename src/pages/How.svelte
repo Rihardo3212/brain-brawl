@@ -2,7 +2,7 @@
   import Logo from '../components/Logo.svelte';
   import StepFlow from '../components/StepFlow.svelte';
   import { DEVELOPER } from '../lib/brand.js';
-  import { MODES, MODE_LIST, SETUP_STEPS, EXTRAS } from '../lib/modes.js';
+  import { MODES, GROUP_LIST, modesIn, SETUP_STEPS, EXTRAS } from '../lib/modes.js';
 </script>
 
 <main>
@@ -19,8 +19,9 @@
     </div>
   </section>
 
-  {#each MODE_LIST as id}
+  {#each GROUP_LIST.flatMap((g) => modesIn(g.id).map((id, i) => ({ id, g: i === 0 ? g : null }))) as { id, g }}
     {@const m = MODES[id]}
+    {#if g}<h2 class="ghead">{g.icon} {g.label}</h2>{/if}
     <section class="block" style="--mc:{m.color}">
       <div class="mhead">
         <span class="icon-tile" style="--sz:60px">{m.icon}</span>
@@ -38,6 +39,7 @@
 <style>
   main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.2rem; display: flex; flex-direction: column; align-items: center; gap: 1.6rem; }
   .back { text-decoration: none; }
+  .ghead { font-size: 2.6rem; margin-top: 1rem; }
   h1 { font-size: 3rem; }
   .block { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1.3rem; padding-top: 0.6rem; }
   .block h2 { font-size: 2.2rem; }

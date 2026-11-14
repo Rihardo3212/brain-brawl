@@ -11,6 +11,13 @@
   import FakePhone from '../views/phone/FakePhone.svelte';
   import DoodlePhone from '../views/phone/DoodlePhone.svelte';
   import PinPhone from '../views/phone/PinPhone.svelte';
+  import ClosestPhone from '../views/phone/ClosestPhone.svelte';
+  import ScribblePhone from '../views/phone/ScribblePhone.svelte';
+  import OddPhone from '../views/phone/OddPhone.svelte';
+  import WhoPhone from '../views/phone/WhoPhone.svelte';
+  import ReflexPhone from '../views/phone/ReflexPhone.svelte';
+  import SketchPhone from '../views/phone/SketchPhone.svelte';
+  import TimelinePhone from '../views/phone/TimelinePhone.svelte';
   import EndPhone from '../views/phone/EndPhone.svelte';
   import StepFlow from '../components/StepFlow.svelte';
   import { MODES } from '../lib/modes.js';
@@ -96,7 +103,7 @@
       if (s.phase === 'answer' && s.current?.buzzer === id) navigator.vibrate?.([80, 40, 80]);
       if (s.phase === 'reveal' && s.current?.result === 'correct' && s.current?.winner === myUnit) { sfx.correct(); navigator.vibrate?.([40, 30, 40, 30, 120]); }
       if (s.phase === 'board' && s.turn === myUnit) navigator.vibrate?.(100);
-      if (['finalBet', 'wq', 'lie', 'pick', 'pguess'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
+      if (['finalBet', 'wq', 'lie', 'pick', 'pguess', 'cguess', 'tguess', 'scwrite', 'scdraw', 'scdesc', 'scvote', 'oclue', 'ovote', 'wwrite', 'wguess', 'rready', 'mdraw'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
       if (s.phase === 'dchoose' && s.doodle?.drawer === id) navigator.vibrate?.([100, 50, 100]);
       if (s.phase === 'wreveal' && s.wedge?.winner === myUnit) sfx.correct();
     }
@@ -203,6 +210,20 @@
       <DoodlePhone {s} {id} {avatars} {send} {now} {react} {db} />
     {:else if game === 'pindrop'}
       <PinPhone {s} {id} {myUnit} {unit} {send} {now} {react} />
+    {:else if game === 'sketch'}
+      <SketchPhone {s} {id} {myUnit} {send} {now} {react} {db} />
+    {:else if game === 'reflex'}
+      <ReflexPhone {s} {id} {myUnit} {send} {react} />
+    {:else if game === 'whowrote'}
+      <WhoPhone {s} {id} {avatars} {send} {now} {react} />
+    {:else if game === 'oddone'}
+      <OddPhone {s} {id} {avatars} {send} {now} {react} />
+    {:else if game === 'scribble'}
+      <ScribblePhone {s} {id} {send} {now} {react} {db} />
+    {:else if game === 'closest'}
+      <ClosestPhone {s} {id} {myUnit} {send} {now} {react} />
+    {:else if game === 'timeline'}
+      <TimelinePhone {s} {id} {myUnit} {send} {now} {react} />
     {/if}
   </div></main>
 </div>

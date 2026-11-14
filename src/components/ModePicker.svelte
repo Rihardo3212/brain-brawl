@@ -1,6 +1,6 @@
 <script>
   // Game mode + length picker and the Start button (VIP phone or host phone).
-  import { MODES, MODE_LIST } from '../lib/modes.js';
+  import { MODES, GROUP_LIST, modesIn } from '../lib/modes.js';
   import { MAX_SOLO } from '../lib/room.js';
   import { sfx } from '../lib/sound.js';
 
@@ -8,12 +8,24 @@
   const n = $derived(s.order.length);
   const mode = $derived(MODES[s.settings.game]);
   const lengths = $derived(Object.entries(mode.lengths).filter(([k, l]) => !l.hidden || s.settings.length === k));
+  // Which group tab is open. Starts on the group of the chosen game.
+  let picked = $state(null);
+  const tab = $derived(picked || mode.group);
 </script>
 
 <div class="picker card">
   <h3>{title}</h3>
+  {#if GROUP_LIST.length > 1}
+    <div class="tabs">
+      {#each GROUP_LIST as g}
+        <button class="tab" class:on={tab === g.id} onclick={() => { sfx.pop(); picked = g.id; }}>
+          <span>{g.icon}</span>{g.label}
+        </button>
+      {/each}
+    </div>
+  {/if}
   <div class="modes">
-    {#each MODE_LIST as id}
+    {#each modesIn(tab) as id}
       {@const m = MODES[id]}
       <button class="mode" class:on={s.settings.game === id} style="--mc:{m.color}" onclick={() => { sfx.pop(); send('settings', { game: id }); }}>
         <span class="mi">{m.icon}</span>
@@ -39,6 +51,13 @@
 
 <style>
   .picker { display: flex; flex-direction: column; gap: 0.75rem; text-align: center; }
+  .tabs { display: flex; gap: 0.35rem; background: var(--well); padding: 0.3rem; border-radius: 16px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.05rem;
+    padding: 0.35rem 0.2rem; border-radius: 12px; font-weight: 900; font-size: 0.8rem; color: var(--muted);
+  }
+  .tab span { font-size: 1.1rem; }
+  .tab.on { background: var(--surface-hi); color: inherit; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.5); }
   .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
   .mode {
     display: flex; flex-direction: column; align-items: center; gap: 0.1rem;

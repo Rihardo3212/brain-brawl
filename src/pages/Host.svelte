@@ -12,6 +12,13 @@
   import FakeStage from '../views/host/FakeStage.svelte';
   import DoodleStage from '../views/host/DoodleStage.svelte';
   import PinStage from '../views/host/PinStage.svelte';
+  import ClosestStage from '../views/host/ClosestStage.svelte';
+  import ScribbleStage from '../views/host/ScribbleStage.svelte';
+  import OddStage from '../views/host/OddStage.svelte';
+  import WhoStage from '../views/host/WhoStage.svelte';
+  import ReflexStage from '../views/host/ReflexStage.svelte';
+  import SketchStage from '../views/host/SketchStage.svelte';
+  import TimelineStage from '../views/host/TimelineStage.svelte';
   import EndView from '../views/host/EndView.svelte';
   import ScoreBar from '../views/host/ScoreBar.svelte';
   import { getDb, isLocal } from '../lib/db.js';
@@ -106,9 +113,16 @@
     spin: 'board', wq: 'think', wreveal: 'think',
     lie: 'sneaky', pick: 'sneaky', freveal: 'sneaky',
     dchoose: 'chill', ddraw: 'chill', dreveal: 'chill',
-    pguess: 'think', preveal: 'think'
+    pguess: 'think', preveal: 'think',
+    cguess: 'think', creveal: 'think',
+    tguess: 'think', treveal: 'think',
+    scwrite: 'chill', scdraw: 'chill', scdesc: 'chill', scshow: 'chill', scvote: 'chill',
+    oclue: 'sneaky', ovote: 'sneaky', oguess: 'sneaky', oresult: 'sneaky',
+    wwrite: 'sneaky', wguess: 'sneaky', wshow: 'sneaky',
+    rready: 'board', rgo: 'think', rresult: 'board',
+    mlook: 'think', mdraw: 'chill', mreveal: 'chill'
   };
-  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal', 'pguess', 'preveal']);
+  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal', 'pguess', 'preveal', 'cguess', 'creveal', 'tguess', 'treveal', 'scwrite', 'scdraw', 'scdesc', 'scshow', 'scvote', 'oclue', 'ovote', 'oguess', 'oresult', 'wwrite', 'wguess', 'wshow', 'rready', 'rgo', 'rresult', 'mlook', 'mdraw', 'mreveal']);
   const count = (o) => Object.keys(o || {}).length;
 
   function react(a, b) {
@@ -121,7 +135,7 @@
 
     if (a.phase !== b.phase) {
       if (b.phase !== 'end' && MUSIC_FOR[b.phase]) playMusic(MUSIC_FOR[b.phase]);
-      if (a.phase === 'intro') { sfx.fanfare(); fx.stamp("LET'S BRAWL!", MODES[b.settings.game].color, MODES[b.settings.game].name); }
+      if (a.phase === 'intro') { sfx.fanfare(); fx.stamp("LET'S PARTY!", MODES[b.settings.game].color, MODES[b.settings.game].name); }
       phaseEffects(a, b);
     }
     stepEffects(a, b);
@@ -159,7 +173,97 @@
         break;
       case 'finalQ': case 'wq': case 'pick': case 'ddraw': sfx.ding(); break;
       case 'finalReveal': sfx.drumroll(2); break;
-      case 'spin': case 'lie': case 'dchoose': case 'pguess': sfx.whoosh(); break;
+      case 'spin': case 'lie': case 'dchoose': case 'pguess': case 'cguess': case 'tguess': sfx.whoosh(); break;
+      case 'scwrite': case 'scdesc': sfx.whoosh(); break;
+      case 'scdraw': sfx.ding(); break;
+      case 'scshow': sfx.reveal(); break;
+      case 'scvote': sfx.ding(); break;
+      case 'oclue': sfx.whoosh(); break;
+      case 'ovote': sfx.ding(); break;
+      case 'oguess': sfx.stamp(); fx.stamp('CAUGHT!', '#ff3b4f', b.odd.caught.map((p) => b.players[p]?.name).join(' & ')); break;
+      case 'oresult': {
+        const o = b.odd;
+        const away = o.spies.filter((p) => !o.caught.includes(p));
+        sfx.drumroll(0.6);
+        setTimeout(() => {
+          if (away.length) { sfx.sadTrombone(); fx.stamp('SPY ESCAPED!', '#8b5cf6', away.map((p) => b.players[p]?.name).join(' & ')); }
+          else { sfx.correct(); fx.confetti(60, ['#8b5cf6', '#ffffff']); fx.stamp(o.word.toUpperCase(), '#8b5cf6', 'was the word'); }
+        }, 700);
+        break;
+      }
+      case 'wwrite': sfx.whoosh(); break;
+      case 'wguess': sfx.ding(); break;
+      case 'wshow': {
+        const w = b.who;
+        const right = Object.values(w.guesses).filter((p) => p === w.author).length;
+        sfx.drumroll(0.6);
+        setTimeout(() => {
+          if (right) { sfx.correct(); fx.confetti(60, ['#14b8a6', '#ffffff']); }
+          else { sfx.stamp(); }
+          fx.stamp(`${b.players[w.author]?.name || '???'}!`, '#14b8a6', right ? `${right} got it` : 'Fooled everyone!');
+        }, 700);
+        break;
+      }
+      case 'rready': sfx.whoosh(); break;
+      case 'rgo': if (b.reflex.game !== 'green') sfx.open(); break;
+      case 'rresult': {
+        const r = b.reflex;
+        const win = Object.entries(r.points).filter(([, p]) => p === 1000).map(([pid]) => b.players[pid]?.name);
+        if (win.length) { sfx.correct(); fx.stamp('WINNER!', '#f97316', win.join(' & ')); fx.confetti(70, ['#f97316', '#ffc400', '#ffffff']); }
+        else sfx.sadTrombone();
+        break;
+      }
+      case 'mlook': sfx.whoosh(); break;
+      case 'mdraw': sfx.ding(); break;
+      case 'mreveal': {
+        const m = b.sketch;
+        sfx.drumroll(0.8);
+        const top = Object.entries(m.results).filter(([, r]) => r.pts >= 800);
+        setTimeout(() => {
+          if (top.length) {
+            sfx.correct();
+            setTimeout(() => sfx.applause(1.2), 250);
+            fx.confetti(90, ['#ec4899', '#ffffff', '#ffc400']);
+            fx.stamp('MASTERPIECE!', '#ec4899', top.map(([pid]) => b.players[pid]?.name).join(' & '));
+          } else if (count(m.results)) sfx.reveal();
+          else sfx.sadTrombone();
+        }, 900);
+        break;
+      }
+      case 'treveal': {
+        const l = b.line;
+        sfx.drumroll(0.8);
+        l.answer.forEach((_, i) => setTimeout(() => sfx.pinDrop(), 300 + i * 550));
+        const perfect = Object.entries(l.results).filter(([, r]) => r.perfect);
+        setTimeout(() => {
+          if (perfect.length) {
+            sfx.correct();
+            setTimeout(() => sfx.applause(1.3), 250);
+            fx.confetti(100, ['#eab308', '#ffffff', '#ffc400']);
+            fx.stamp('PERFECT!', '#eab308', perfect.map(([pid]) => b.players[pid]?.name).join(' & '));
+          } else if (count(l.orders)) sfx.reveal();
+          else sfx.sadTrombone();
+        }, 500 + l.answer.length * 550);
+        break;
+      }
+      case 'creveal': {
+        const c = b.close;
+        const n = Object.keys(c.guesses).length;
+        sfx.drumroll(1.1);
+        for (let i = 0; i < n; i++) setTimeout(() => sfx.bloop(), 200 + i * 220);
+        const spots = Object.entries(c.results).filter(([, r]) => r.spot);
+        setTimeout(() => {
+          sfx.pinDrop();
+          if (spots.length) {
+            sfx.correct();
+            setTimeout(() => sfx.applause(1.4), 250);
+            fx.confetti(110, ['#06b6d4', '#ffc400', '#ffffff']);
+            fx.stamp('SPOT ON!', '#06b6d4', spots.map(([pid]) => b.players[pid]?.name).join(' & '));
+          } else if (n) sfx.reveal();
+          else sfx.sadTrombone();
+        }, 600 + n * 220);
+        break;
+      }
       case 'preveal': {
         const p = b.pin;
         sfx.drumroll(1.1);
@@ -248,6 +352,27 @@
       if (b.pin.rush > a.pin.rush) setTimeout(() => sfx.rise(), 120);
       if (b.pin.hint && !a.pin.hint) sfx.reveal();
     }
+    // Closest Call
+    if (b.close && a.close && b.phase === 'cguess' && count(b.close.guesses) > count(a.close.guesses)) sfx.bloop();
+    // Scribble Chain
+    if (b.chain && a.chain) {
+      if (['scwrite', 'scdraw', 'scdesc'].includes(b.phase) && count(b.chain.done) > count(a.chain.done)) sfx.bloop();
+      if (b.phase === 'scshow' && a.phase === 'scshow' && b.chain.showStep > a.chain.showStep) sfx.reveal();
+      if (b.phase === 'scvote' && b.chain.tallied && !a.chain.tallied) {
+        const top = Math.max(0, ...Object.values(b.chain.gained));
+        if (top) { sfx.correct(); fx.confetti(40, ['#a855f7', '#ffffff']); } else sfx.stamp();
+      }
+    }
+    // Odd One Out
+    if (b.odd && a.odd && ['oclue', 'ovote'].includes(b.phase) && (count(b.odd.clues) > count(a.odd.clues) || count(b.odd.votes) > count(a.odd.votes))) sfx.bloop();
+    // Who Wrote That?
+    if (b.who && a.who && ['wwrite', 'wguess'].includes(b.phase) && (count(b.who.answers) > count(a.who.answers) || count(b.who.guesses) > count(a.who.guesses))) sfx.bloop();
+    // Reflex Rumble
+    if (b.reflex && a.reflex && b.phase === 'rgo' && count(b.reflex.results) > count(a.reflex.results)) sfx.bloop();
+    // Memory Sketch
+    if (b.sketch && a.sketch && b.phase === 'mdraw' && count(b.sketch.done) > count(a.sketch.done)) sfx.bloop();
+    // Timeline
+    if (b.line && a.line && b.phase === 'tguess' && count(b.line.orders) > count(a.line.orders)) sfx.bloop();
     // Doodle Dash
     if (b.doodle && a.doodle && b.phase === 'ddraw' && a.phase === 'ddraw') {
       if (count(b.doodle.guessed) > count(a.doodle.guessed)) sfx.correct();
@@ -268,6 +393,19 @@
       case 'lie': case 'pick': return s.fake?.until;
       case 'ddraw': return s.doodle?.until;
       case 'pguess': return s.pin?.until;
+      case 'cguess': return s.close?.until;
+      case 'scwrite': return s.chain?.until;
+      case 'scdraw': return s.chain?.until;
+      case 'scdesc': return s.chain?.until;
+      case 'scvote': return s.chain?.tallied ? null : s.chain?.until;
+      case 'oclue': return s.odd?.until;
+      case 'ovote': return s.odd?.until;
+      case 'oguess': return s.odd?.until;
+      case 'wwrite': return s.who?.until;
+      case 'wguess': return s.who?.until;
+      case 'rready': return s.reflex?.readyUntil;
+      case 'mdraw': return s.sketch?.until;
+      case 'tguess': return s.line?.until;
       default: return null;
     }
   }
@@ -352,6 +490,20 @@
     <DoodleStage {s} {avatars} {now} {db} />
   {:else if game === 'pindrop'}
     <PinStage {s} {avatars} {now} />
+  {:else if game === 'sketch'}
+    <SketchStage {s} {avatars} {now} {db} />
+  {:else if game === 'reflex'}
+    <ReflexStage {s} {avatars} {now} />
+  {:else if game === 'whowrote'}
+    <WhoStage {s} {avatars} {now} />
+  {:else if game === 'oddone'}
+    <OddStage {s} {avatars} {now} />
+  {:else if game === 'scribble'}
+    <ScribbleStage {s} {avatars} {now} {db} />
+  {:else if game === 'closest'}
+    <ClosestStage {s} {avatars} {now} />
+  {:else if game === 'timeline'}
+    <TimelineStage {s} {avatars} {now} />
   {/if}
   </div></div>
 

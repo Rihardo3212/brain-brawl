@@ -17,8 +17,15 @@ import wedge from './wedge.js';
 import fakeout from './fakeout.js';
 import doodle from './doodle.js';
 import pindrop from './pindrop.js';
+import closest from './closest.js';
+import scribble from './scribble.js';
+import oddone from './oddone.js';
+import whowrote from './whowrote.js';
+import reflex from './reflex.js';
+import sketch from './sketch.js';
+import timeline from './timeline.js';
 
-export const ENGINES = { board, wedge, fakeout, doodle, pindrop };
+export const ENGINES = { board, wedge, fakeout, doodle, pindrop, closest, timeline, scribble, oddone, whowrote, reflex, sketch };
 export const TEAM_DRAW_TIME = 45000;
 export const INTRO_TIME = 14000; // how-to-play screen before each game
 
@@ -32,6 +39,7 @@ export function normalize(s) {
   s.units = s.units || {};
   s.unitOrder = s.unitOrder || [];
   s.teamReady = s.teamReady || {};
+  s.pscore = s.pscore || {}; // points per player this game (social modes show them)
   for (const k of ['vip', 'turn', 'results', 'hostId', 'hostName', 'drawUntil', 'introUntil']) s[k] = s[k] ?? null;
   s.mode = s.mode || 'party';
   s.teamMode = !!s.teamMode;
@@ -94,13 +102,43 @@ export class GameHost {
   isHere(pid) { return !!this.presence[pid]; }
   unitHere(uid) { return (this.state.units[uid]?.members || []).some((p) => this.isHere(p)); }
   unitOf(pid) { return unitOf(this.state, pid); }
-  get engine() { return ENGINES[this.state.settings.game] || board; }
+  // Players in the game who are still connected (the host never plays).
+  playersHere() { return this.state.order.filter((p) => this.state.players[p]?.unit && this.isHere(p)); }
+
+  // Give points to one player. They count for the player's unit (themselves, or their team).
+  // gained: optional map that collects this round's points per player.
+  award(pid, pts, gained) {
+    const s = this.state;
+    const uid = this.unitOf(pid);
+    if (!uid || !s.units[uid] || !pts) return;
+    s.units[uid].score += pts;
+    s.pscore[pid] = (s.pscore[pid] || 0) + pts;
+    if (gained) gained[pid] = (gained[pid] || 0) + pts;
+  }
+
+  // "Best of team": everyone plays, each unit scores its best player's points.
+  // byPlayer: { pid: points }. Returns { unitId: { pts, by } } and adds the points.
+  awardBest(byPlayer, gained) {
+    const best = {};
+    for (const [pid, pts] of Object.entries(byPlayer)) {
+      const uid = this.unitOf(pid);
+      if (uid && (!best[uid] || pts > best[uid].pts)) best[uid] = { pts, by: pid };
+    }
+    for (const [uid, b] of Object.entries(best)) {
+      if (!b.pts) continue;
+      this.state.units[uid].score += b.pts;
+      this.state.pscore[b.by] = (this.state.pscore[b.by] || 0) + b.pts;
+      if (gained) gained[uid] = (gained[uid] || 0) + b.pts;
+    }
+    return best;
+  }
+  get engine() { return ENGINES[this.state?.settings.game] || board; }
 
   async start(resume) {
     const saved = resume ? await this.db.get(this.path('state')) : null;
     this.state = normalize(saved) || newLobbyState(this.code);
     if (!saved) {
-      for (const p of ['inputs', 'avatars', 'teamdraw', 'doodle']) await this.db.remove(this.path(p));
+      for (const p of ['inputs', 'avatars', 'teamdraw', 'doodle', 'sketch', 'chain']) await this.db.remove(this.path(p));
     }
     await this.save();
     this.unsubs.push(this.db.onValue(this.path('presence'), (p) => {
@@ -274,6 +312,7 @@ export class GameHost {
   beginMode() {
     const s = this.state;
     s.unitOrder.forEach((u) => { s.units[u].score = 0; s.units[u].wedges = {}; });
+    s.pscore = {};
     s.game += 1;
     this.mem = {};
     this.engine.start(this);

@@ -12,8 +12,8 @@
   "text": "Hello, hello! Somebody's keen. I like that."
  },
  {
-  "id": "aaa3292d55b33c90",
-  "text": "Another brain joins the brawl!"
+  "id": "867bf52db551e978",
+  "text": "Another challenger enters the pit!"
  },
  {
   "id": "96f95ea4ef18d703",
@@ -44,24 +44,24 @@
   "text": "Artists, assemble! Draw your team picture. Quickly now!"
  },
  {
-  "id": "e018fe819123d69a",
-  "text": "Good evening, and welcome to Brain Brawl! Where brains go to brawl. It's in the name!"
+  "id": "1230a22d2d944676",
+  "text": "Good evening, and welcome to Party Pit! Where friendships go to be tested. Lovingly."
  },
  {
-  "id": "55772035c4926a8d",
-  "text": "Hello, hello, hello! Welcome to Brain Brawl! I'm your host, Lewis, and I've been polished for the occasion."
+  "id": "41340bb43ef5011c",
+  "text": "Hello, hello, hello! Welcome to Party Pit! I'm your host, Lewis, and I've been polished for the occasion."
  },
  {
-  "id": "9a63494144e2d04a",
-  "text": "Ladies and gentlemen, and that one friend who always argues with the answers. Welcome to Brain Brawl!"
+  "id": "6400d1ba0294bdaa",
+  "text": "Ladies and gentlemen, and that one friend who always argues with the answers. Welcome to Party Pit!"
  },
  {
-  "id": "d71495b402b6e7dc",
-  "text": "Welcome to Brain Brawl! Phones out, thinking caps on, biscuits within reach."
+  "id": "4f8bba29c3ad6d44",
+  "text": "Welcome to Party Pit! Phones out, thinking caps on, biscuits within reach."
  },
  {
-  "id": "f507fd8026965848",
-  "text": "It's showtime! Welcome to Brain Brawl, the only show where being a know-it-all is finally a good thing!"
+  "id": "075e222c6dddaedb",
+  "text": "It's showtime! Welcome to Party Pit, the only show where showing off is finally a good thing!"
  },
  {
   "id": "cf2706902bdbdf4c",
@@ -102,6 +102,62 @@
  {
   "id": "e20abb55cb4912a2",
   "text": "It's Pin Drop! Where in the world are we? Drop your pin and find out!"
+ },
+ {
+  "id": "4b9ec52539e76935",
+  "text": "This is Closest Call! Guess the number. Closest guess wins the points."
+ },
+ {
+  "id": "3d6ba6e055db35bd",
+  "text": "Closest Call! You don't have to know the answer. Just be closer than your mates."
+ },
+ {
+  "id": "1c2bdba044b5856b",
+  "text": "This is Timeline! Put the events in order, oldest first. Fast and right wins big."
+ },
+ {
+  "id": "6d132b3a2b7a7bc0",
+  "text": "Timeline! Which came first? Sort it out, quick as you can."
+ },
+ {
+  "id": "16ce9bf537556047",
+  "text": "This is Who Wrote That! Answer a fun question, then guess who wrote what."
+ },
+ {
+  "id": "f09ce00721dbe51e",
+  "text": "Who Wrote That! How well do you really know your friends? Let's find out."
+ },
+ {
+  "id": "36998227c77eb25d",
+  "text": "This is Odd One Out! Everyone gets a secret word, except the spy. Find the spy!"
+ },
+ {
+  "id": "473f0bfc0d200ec6",
+  "text": "Odd One Out! One of you is a spy. Give clues, then vote them out."
+ },
+ {
+  "id": "1d72514574bb3e86",
+  "text": "This is Scribble Chain! Write it, draw it, guess it, pass it on. Chaos guaranteed."
+ },
+ {
+  "id": "2d95e9486d8b47eb",
+  "text": "Scribble Chain! Like the telephone game, but with terrible drawings."
+ },
+ {
+  "id": "f9bdfd97a38b27dd",
+  "text": "This is Memory Sketch! Look at the drawing, then draw it from memory."
+ },
+ {
+  "id": "293db35fbc8ff017",
+  "text": "Memory Sketch! A quick look, then copy it. The closer the better."
+ },
+ {
+  "id": "962f68a6d020cddc",
+  "text": "This is Reflex Rumble! Quick little challenges. Fingers at the ready!"
+ },
+ {
+  "id": "f5979866c7c09d13",
+  "text": "Reflex Rumble! Tap, mash and shake your way to glory."
  },
  {
   "id": "a96ca422401fa72c",
@@ -654,6 +710,326 @@
  {
   "id": "6031a3e1c7b437b7",
   "text": "And the pins are in. Let's have a look."
+ },
+ {
+  "id": "30e1eb86a0378bbf",
+  "text": "Type your best guess. Closest wins!"
+ },
+ {
+  "id": "81ab9c8b213de93c",
+  "text": "Numbers on your phones, please. Close counts here!"
+ },
+ {
+  "id": "ce4f5708f6d7478e",
+  "text": "No need to be right. Just be less wrong than everyone else."
+ },
+ {
+  "id": "f9b6ab9b963f3ef5",
+  "text": "Last one, and it counts double! Guess wisely."
+ },
+ {
+  "id": "aba475241d2f4e3a",
+  "text": "Final question, double points! This is where legends are made."
+ },
+ {
+  "id": "b839108c56e7d4c9",
+  "text": "Spot on! Are you a calculator in disguise?"
+ },
+ {
+  "id": "b202afd899c50d72",
+  "text": "Bang on the money! I'm genuinely impressed. And slightly scared."
+ },
+ {
+  "id": "6ccfa1b1fcae3fb3",
+  "text": "Let's see who got closest!"
+ },
+ {
+  "id": "02ca3639ef6ad1a0",
+  "text": "And the real answer is..."
+ },
+ {
+  "id": "b2f0a90b8eeec266",
+  "text": "Right, line them up. Who's nearest?"
+ },
+ {
+  "id": "bde16655c8c79d66",
+  "text": "Put them in order, oldest first!"
+ },
+ {
+  "id": "dd148683b8acda9f",
+  "text": "History time! Which came first?"
+ },
+ {
+  "id": "8c36b6c190caacee",
+  "text": "Sort them out, from long ago to not so long ago."
+ },
+ {
+  "id": "84d877188fb3e3cc",
+  "text": "A perfect timeline! Somebody paid attention in history class."
+ },
+ {
+  "id": "12ab91b29f32787b",
+  "text": "Flawless! You must own a time machine."
+ },
+ {
+  "id": "0fd349d3f5daa589",
+  "text": "Let's see the real order!"
+ },
+ {
+  "id": "bf658e8d108e16d6",
+  "text": "And here's how history actually went..."
+ },
+ {
+  "id": "75d6253b1f3ab218",
+  "text": "Drumroll for the history books!"
+ },
+ {
+  "id": "d387a7d08459fa8a",
+  "text": "Write your answer! Be honest. Or don't. I won't tell."
+ },
+ {
+  "id": "15f9fa5e97ef8528",
+  "text": "Answers on your phones, please. Disguise your style if you're sneaky!"
+ },
+ {
+  "id": "df55e29229b6b656",
+  "text": "Time to write! Remember, your friends are watching. Well, guessing."
+ },
+ {
+  "id": "9afe88ce5d6df1f7",
+  "text": "Who wrote that? Look around the room. Somebody's blushing."
+ },
+ {
+  "id": "85a791fee7c37ec3",
+  "text": "Hmm, who would write something like that?"
+ },
+ {
+  "id": "10f98c739baaa0f5",
+  "text": "Whose answer is this? Choose wisely!"
+ },
+ {
+  "id": "09085f3fe107b84f",
+  "text": "Rumbled! You know your friends too well."
+ },
+ {
+  "id": "c14c7d25a2d41488",
+  "text": "Caught red handed!"
+ },
+ {
+  "id": "bf2cff4359d6517a",
+  "text": "No secrets in this room, apparently."
+ },
+ {
+  "id": "6563ff231f03a8d9",
+  "text": "Nobody guessed it! What a master of disguise."
+ },
+ {
+  "id": "d24f5cf3eeb0030e",
+  "text": "Fooled the lot of you! Bravo, you sneaky thing."
+ },
+ {
+  "id": "35c053dbe25b77fd",
+  "text": "There's a spy among us! Everyone else, give a clue. One word. Not too obvious!"
+ },
+ {
+  "id": "308a14b5c2903016",
+  "text": "One of you doesn't know the word. Type your clue, and act natural."
+ },
+ {
+  "id": "3949f6d766b33f55",
+  "text": "Shh! The spy is listening. One word clues, please."
+ },
+ {
+  "id": "2a4d2f4e921d6868",
+  "text": "Right, who's the spy? Vote now!"
+ },
+ {
+  "id": "afd36887c9495321",
+  "text": "Look at those clues. Somebody's bluffing. Who is it?"
+ },
+ {
+  "id": "e8eb4d0b52edf6b0",
+  "text": "Point the finger! Who's the odd one out?"
+ },
+ {
+  "id": "17c64f503e806c42",
+  "text": "Caught you! But wait, the spy gets one guess at the word."
+ },
+ {
+  "id": "8398fe00e8241420",
+  "text": "Gotcha, spy! Now, can you guess the secret word?"
+ },
+ {
+  "id": "f47079db03b77830",
+  "text": "The spy got away! Nobody suspected a thing."
+ },
+ {
+  "id": "1b1460a0a50f0fb5",
+  "text": "Wrong person! The real spy is having a lovely evening."
+ },
+ {
+  "id": "842f6628637b9307",
+  "text": "Sneaky, sneaky! The spy escapes!"
+ },
+ {
+  "id": "6be742d840b6a5b9",
+  "text": "Spy caught! Well done, detectives."
+ },
+ {
+  "id": "c08bac4c149b2ad1",
+  "text": "Justice is served! Points for the honest folk."
+ },
+ {
+  "id": "7958494a694d0554",
+  "text": "Caught, but they guessed the word! Cheeky!"
+ },
+ {
+  "id": "d8447404d3276634",
+  "text": "The spy knew it all along! Well played."
+ },
+ {
+  "id": "85d6c3e35e5999bd",
+  "text": "Write something silly for the next person to draw!"
+ },
+ {
+  "id": "bce4d2a185a67ff0",
+  "text": "Prompts, please! The sillier the better."
+ },
+ {
+  "id": "2a4cb8a39e52d18a",
+  "text": "Write a little idea. Your friends will ruin it beautifully."
+ },
+ {
+  "id": "b782711b0d2dabc0",
+  "text": "Now draw what you got! No letters, no cheating."
+ },
+ {
+  "id": "7a860f0cf189307b",
+  "text": "Artists, it's your moment. Draw!"
+ },
+ {
+  "id": "be6812cdbeb3eb2d",
+  "text": "Draw it! It doesn't have to be good. It really doesn't."
+ },
+ {
+  "id": "f205528536369eb6",
+  "text": "What on earth is that? Describe the drawing!"
+ },
+ {
+  "id": "719200d6bc82d5c9",
+  "text": "Look at that masterpiece. What is it?"
+ },
+ {
+  "id": "2d901c2bcebdfb89",
+  "text": "Guess the drawing! Be kind. Or honest."
+ },
+ {
+  "id": "7c962edebb1942cc",
+  "text": "Let's see how that chain turned out!"
+ },
+ {
+  "id": "4febf6ade5026031",
+  "text": "Here comes the chain! Brace yourselves."
+ },
+ {
+  "id": "719bc971686489e2",
+  "text": "Watch carefully. This is where it all goes wrong."
+ },
+ {
+  "id": "ccec3b9605c92c2f",
+  "text": "Vote for your favorite step!"
+ },
+ {
+  "id": "6d83dbf77ffcaca4",
+  "text": "Which bit was the best? Vote now!"
+ },
+ {
+  "id": "41470c7e5055db84",
+  "text": "Look closely! You'll draw it from memory."
+ },
+ {
+  "id": "db22e710a478d23c",
+  "text": "Eyes on the screen! Remember every line."
+ },
+ {
+  "id": "b31b1a6aa37d94a2",
+  "text": "Memorise this! It won't stay long."
+ },
+ {
+  "id": "e2a19cbfd25905b0",
+  "text": "Now draw it from memory! Go!"
+ },
+ {
+  "id": "51fe67a9bce66463",
+  "text": "Gone! Draw what you remember."
+ },
+ {
+  "id": "1d6768a86a2426b2",
+  "text": "Pens out! How good is your memory?"
+ },
+ {
+  "id": "23fe3003379b3343",
+  "text": "Wow, a photographic memory!"
+ },
+ {
+  "id": "e6fa8343ebaff934",
+  "text": "Brilliant copies! I'm impressed."
+ },
+ {
+  "id": "b6b38782e9306c05",
+  "text": "Let's compare! Hmm. Interesting choices."
+ },
+ {
+  "id": "9d8e8ba9e7638a66",
+  "text": "Here are your drawings. Some of them are... art."
+ },
+ {
+  "id": "755897afcc7ff96f",
+  "text": "And how close did you get?"
+ },
+ {
+  "id": "7c62dad06cf5a857",
+  "text": "Wait for green, then tap! Too early and you're out."
+ },
+ {
+  "id": "9427f181c3158db7",
+  "text": "Fingers ready! Tap the moment it turns green."
+ },
+ {
+  "id": "e5c46db083322d16",
+  "text": "Mash that button! As fast as you can!"
+ },
+ {
+  "id": "d2e1712b7b43bcdd",
+  "text": "Tapping time! Go wild!"
+ },
+ {
+  "id": "953d2cf8e70a4fcb",
+  "text": "Stop the clock at exactly five seconds. Count in your head!"
+ },
+ {
+  "id": "c49fff831fbc9e03",
+  "text": "Five seconds. No peeking at the clock!"
+ },
+ {
+  "id": "c26b1ce039bb8363",
+  "text": "Shake your phone! Hold on tight!"
+ },
+ {
+  "id": "babd8ac963025d64",
+  "text": "Shake it like you mean it! Not too hard."
+ },
+ {
+  "id": "50de89d8a8a76d1c",
+  "text": "Lightning fast!"
+ },
+ {
+  "id": "3092c3e145cf4f2d",
+  "text": "What reflexes! Are you even human?"
+ },
+ {
+  "id": "be60475571170aae",
+  "text": "And we have a winner!"
  },
  {
   "id": "1bd5cd77c6964053",
@@ -2250,5 +2626,837 @@
  {
   "id": "a58a724cb719a2a7",
   "text": "Lençóis Maranhenses! Brazil."
+ },
+ {
+  "id": "4036c4c4b2bd09fb",
+  "text": "In which year did the first iPhone come out?"
+ },
+ {
+  "id": "c5744ca90a28cf9f",
+  "text": "In which year did Apollo 11 land on the Moon?"
+ },
+ {
+  "id": "3fb10acc75a36c7e",
+  "text": "In which year did the Wright brothers make the first powered plane flight?"
+ },
+ {
+  "id": "5cc549a113c2b143",
+  "text": "In which year was the Great Fire of London?"
+ },
+ {
+  "id": "18011710418a05ae",
+  "text": "In which year was the first FIFA World Cup played?"
+ },
+ {
+  "id": "35e639bfe0c832ce",
+  "text": "In which year were the first modern Olympic Games held in Athens?"
+ },
+ {
+  "id": "137dd1b2172a5676",
+  "text": "In which year was Google founded?"
+ },
+ {
+  "id": "ebe7fd4f2920f8c4",
+  "text": "In which year did Facebook launch?"
+ },
+ {
+  "id": "4017d7a6eb442b74",
+  "text": "In which year did the first Star Wars movie come out?"
+ },
+ {
+  "id": "0a1191379c4aedf3",
+  "text": "In which year was Nintendo founded (as a playing card company)?"
+ },
+ {
+  "id": "9eed1c76e9078b3e",
+  "text": "In which year was the LEGO company founded?"
+ },
+ {
+  "id": "e7b50eec11f12a96",
+  "text": "In which year did Alexander Fleming discover penicillin?"
+ },
+ {
+  "id": "7614e8ac528853b7",
+  "text": "In which year was the Magna Carta sealed?"
+ },
+ {
+  "id": "b3e5779eddce08a8",
+  "text": "In which year did World War I begin?"
+ },
+ {
+  "id": "5b1b86d07364b30c",
+  "text": "In which year was Mount Everest first climbed to the top?"
+ },
+ {
+  "id": "13a33d80c5e7eaa1",
+  "text": "In which year was the first Harry Potter book published?"
+ },
+ {
+  "id": "12f3fdbb04524181",
+  "text": "In which year was Tetris created?"
+ },
+ {
+  "id": "dcb32dacc154a3ad",
+  "text": "In which year did the Game Boy first come out in Japan?"
+ },
+ {
+  "id": "a31fa1ca42368c6b",
+  "text": "In which year did the first PlayStation come out in Japan?"
+ },
+ {
+  "id": "3c5aa567de84ce6d",
+  "text": "In which year did the Beatles release their first single, \"Love Me Do\"?"
+ },
+ {
+  "id": "a48a24a32f871651",
+  "text": "In which year was Leonardo da Vinci born?"
+ },
+ {
+  "id": "e94b5fa28086baef",
+  "text": "In which year was William Shakespeare born?"
+ },
+ {
+  "id": "0df7605c80053e25",
+  "text": "In which year did euro coins and banknotes first go into use?"
+ },
+ {
+  "id": "50a8513ae3980d30",
+  "text": "In which year did the Chernobyl disaster happen?"
+ },
+ {
+  "id": "b104b3748e66d13c",
+  "text": "In which year did the McDonald brothers open the first McDonald's restaurant?"
+ },
+ {
+  "id": "b3cd8682deaf57da",
+  "text": "In which year was the Statue of Liberty dedicated?"
+ },
+ {
+  "id": "3adefd264e9da590",
+  "text": "In which year did Wikipedia launch?"
+ },
+ {
+  "id": "c5994cf290854bbe",
+  "text": "In which year was sliced bread first sold?"
+ },
+ {
+  "id": "f15a0b72b3117965",
+  "text": "In which year did Alexander Graham Bell patent the telephone?"
+ },
+ {
+  "id": "92e02fd148b5e86f",
+  "text": "In which year did Disney's first full-length animated film, Snow White, come out?"
+ },
+ {
+  "id": "568454bb15ef38ba",
+  "text": "In which year did Spotify launch?"
+ },
+ {
+  "id": "ff5d45e501bfbc1a",
+  "text": "In which year did Fortnite Battle Royale come out?"
+ },
+ {
+  "id": "b55e66a9ff802dc8",
+  "text": "In which year did the first Grand Theft Auto game come out?"
+ },
+ {
+  "id": "017ed9bc85171024",
+  "text": "In which year was the Mona Lisa stolen from the Louvre?"
+ },
+ {
+  "id": "f5468c73841ac6a5",
+  "text": "In which year was the first text message (SMS) sent?"
+ },
+ {
+  "id": "aa7ff89586c0d348",
+  "text": "In which year was Netflix founded?"
+ },
+ {
+  "id": "6e8b88413f5542f8",
+  "text": "In which year did the Western Roman Empire fall?"
+ },
+ {
+  "id": "00d116fdee966d2f",
+  "text": "How tall is the Burj Khalifa?"
+ },
+ {
+  "id": "e96543027527a7b5",
+  "text": "How tall is the Eiffel Tower, antennas included?"
+ },
+ {
+  "id": "0ae715ed2baa277c",
+  "text": "How long is the Nile river?"
+ },
+ {
+  "id": "a3bb95917ebd9dbf",
+  "text": "On average, how far away is the Moon?"
+ },
+ {
+  "id": "fb306fbbaf3dd553",
+  "text": "How wide is the Earth, measured through the middle?"
+ },
+ {
+  "id": "bd0019493f23d22a",
+  "text": "How wide is the Moon?"
+ },
+ {
+  "id": "7fecfadeba60740f",
+  "text": "How deep is the deepest point of the ocean (the Challenger Deep)?"
+ },
+ {
+  "id": "92b74b9c428e1a9d",
+  "text": "How tall is the Statue of Liberty, from the ground to the torch?"
+ },
+ {
+  "id": "5d627075ae127586",
+  "text": "How tall is the Big Ben clock tower in London?"
+ },
+ {
+  "id": "29bcc28b08bdebbb",
+  "text": "How tall is the Leaning Tower of Pisa?"
+ },
+ {
+  "id": "b8545b4d6c69e2da",
+  "text": "How many steps are there to the top of the Eiffel Tower?"
+ },
+ {
+  "id": "b8d2bf4687830ebf",
+  "text": "How tall was the Great Pyramid of Giza when it was built?"
+ },
+ {
+  "id": "c1c8bf18ff4cb9c8",
+  "text": "How long is the Panama Canal?"
+ },
+ {
+  "id": "612514dd739f40b6",
+  "text": "How tall is Angel Falls, the highest waterfall in the world?"
+ },
+ {
+  "id": "5e803fd79d6fa3e0",
+  "text": "How tall is Mount Kilimanjaro?"
+ },
+ {
+  "id": "4ce03ea306cb667d",
+  "text": "How deep is Lake Baikal, the deepest lake in the world?"
+ },
+ {
+  "id": "69b2034ca5c3686c",
+  "text": "How tall is the Christ the Redeemer statue in Rio (without its base)?"
+ },
+ {
+  "id": "9979fa796cb100cf",
+  "text": "How long can a blue whale grow?"
+ },
+ {
+  "id": "f290ea7662c31b65",
+  "text": "How long is a cricket pitch?"
+ },
+ {
+  "id": "54348ae4dde67655",
+  "text": "How high above Earth does the International Space Station fly?"
+ },
+ {
+  "id": "bdccf6e37087b8c5",
+  "text": "On average, how far is the Earth from the Sun?"
+ },
+ {
+  "id": "db0d150a6f51ce25",
+  "text": "How tall is a Minecraft player?"
+ },
+ {
+  "id": "d47882dfb5f43e82",
+  "text": "How many bones are in the adult human body?"
+ },
+ {
+  "id": "d73d2e5b4b3c07a9",
+  "text": "How many moons does Mars have?"
+ },
+ {
+  "id": "c98429effd34d755",
+  "text": "How many people have walked on the Moon?"
+ },
+ {
+  "id": "c0908e935d9798b3",
+  "text": "How many countries are members of the United Nations?"
+ },
+ {
+  "id": "f1bf48428ab5ba23",
+  "text": "How many stripes are on the flag of the United States?"
+ },
+ {
+  "id": "06c9e6c35059c609",
+  "text": "How many countries are in South America?"
+ },
+ {
+  "id": "8aa0563ee40c8adc",
+  "text": "How many countries share a border with Germany?"
+ },
+ {
+  "id": "8d5c0bd8527b67f8",
+  "text": "How many countries share a border with China?"
+ },
+ {
+  "id": "eea8ac77014ffd08",
+  "text": "How many provinces does Canada have?"
+ },
+ {
+  "id": "fe10aee8e1689d40",
+  "text": "Roughly how many islands make up the Philippines?"
+ },
+ {
+  "id": "4d591aa84698ff0b",
+  "text": "Roughly how many lakes does Finland have?"
+ },
+ {
+  "id": "1163cd01f5ae3bea",
+  "text": "How many rooms does Buckingham Palace have?"
+ },
+ {
+  "id": "cded5fdfe10f8684",
+  "text": "How many floors does the Empire State Building have?"
+ },
+ {
+  "id": "e9f07916f4ee1b2d",
+  "text": "How many players does a baseball team have on the field?"
+ },
+ {
+  "id": "da76aa4974352866",
+  "text": "How many players does an ice hockey team have on the ice?"
+ },
+ {
+  "id": "3443155cc6709ad4",
+  "text": "How many holes are on a standard golf course?"
+ },
+ {
+  "id": "880fe08eb843886d",
+  "text": "What is the highest score you can get with three darts?"
+ },
+ {
+  "id": "1dc27576c712d4b0",
+  "text": "What is a perfect score in ten-pin bowling?"
+ },
+ {
+  "id": "15aaa2d73ef07421",
+  "text": "What is the highest possible break in snooker (a \"maximum\")?"
+ },
+ {
+  "id": "978e9f892fd904b7",
+  "text": "How many balls are on a snooker table at the start of a frame, cue ball included?"
+ },
+ {
+  "id": "92b16a3d6b9d1d2b",
+  "text": "How many balls are used in a game of 8-ball pool, cue ball included?"
+ },
+ {
+  "id": "23c338777dacfed6",
+  "text": "How many spaces are on a Monopoly board?"
+ },
+ {
+  "id": "37607858f0dfaf7e",
+  "text": "How many pieces are in a chess set?"
+ },
+ {
+  "id": "c1f7ffa06c067f88",
+  "text": "How many tiles are in an English Scrabble set?"
+ },
+ {
+  "id": "5b52a5400dfbbf3a",
+  "text": "How many coloured stickers are on a classic Rubik's Cube?"
+ },
+ {
+  "id": "2c244b0774c18051",
+  "text": "How many dominoes are in a double-six set?"
+ },
+ {
+  "id": "8d66c715b06f02a7",
+  "text": "How many small squares are in a Sudoku grid?"
+ },
+ {
+  "id": "d30430c892f091a7",
+  "text": "How many patches (pentagons and hexagons) make up a classic football?"
+ },
+ {
+  "id": "e403cc4c364bd047",
+  "text": "How many sides does a stop sign have?"
+ },
+ {
+  "id": "05bbe32a8cc9dd4f",
+  "text": "How many Olympic gold medals did Michael Phelps win?"
+ },
+ {
+  "id": "a411fa0e452e08cb",
+  "text": "How many times has Brazil won the FIFA World Cup?"
+ },
+ {
+  "id": "531669dadc259951",
+  "text": "How many Harry Potter movies are there (not counting Fantastic Beasts)?"
+ },
+ {
+  "id": "87f427a81de9607e",
+  "text": "How many Pokémon were in the very first games?"
+ },
+ {
+  "id": "b5393aaf2b40eb0f",
+  "text": "How many different block shapes are there in Tetris?"
+ },
+ {
+  "id": "3877a621259b365d",
+  "text": "How many small dots does Pac-Man eat in the first maze (not the big ones)?"
+ },
+ {
+  "id": "3c67370619ab6afe",
+  "text": "How many players can join one game of Among Us at most?"
+ },
+ {
+  "id": "006dfd5ab3877e07",
+  "text": "How many symphonies did Beethoven finish?"
+ },
+ {
+  "id": "3568aaf1456d3539",
+  "text": "How many lines does a sonnet have?"
+ },
+ {
+  "id": "ecd2e3ac96575b8b",
+  "text": "How many eyes does a honey bee have?"
+ },
+ {
+  "id": "69284b5fc7c17764",
+  "text": "How many legs does a lobster have?"
+ },
+ {
+  "id": "b3baf311a1a8c60c",
+  "text": "How many herbs and spices are in KFC's secret recipe, according to KFC?"
+ },
+ {
+  "id": "a71e90704982dcf1",
+  "text": "How many holes does a Ritz cracker have?"
+ },
+ {
+  "id": "619c215b4dfeae57",
+  "text": "How many characters could a tweet have before the limit was raised in 2017?"
+ },
+ {
+  "id": "6f9b9e675083af93",
+  "text": "Roughly how many hairs are on a human head?"
+ },
+ {
+  "id": "ca23caab2cd6b545",
+  "text": "Roughly how many times does a human heart beat in one day?"
+ },
+ {
+  "id": "1a10d56139ba3e4b",
+  "text": "How many minutes does sunlight take to reach the Earth?"
+ },
+ {
+  "id": "79212d32ebc4e102",
+  "text": "What is normal human body temperature?"
+ },
+ {
+  "id": "03de827da09b0349",
+  "text": "At what temperature does water freeze, in Fahrenheit?"
+ },
+ {
+  "id": "449a6a4382af84d8",
+  "text": "How hot is the surface of the Sun?"
+ },
+ {
+  "id": "8c1bf51ab9cb298b",
+  "text": "How many Earth days does it take Mars to go around the Sun once?"
+ },
+ {
+  "id": "bc898005679392a6",
+  "text": "How many hours long is one day on Jupiter (roughly)?"
+ },
+ {
+  "id": "0bdc395b77ffa633",
+  "text": "Roughly how many times does the International Space Station circle the Earth each day?"
+ },
+ {
+  "id": "7a3e0e338734f009",
+  "text": "Roughly how many Earths could fit inside the Sun?"
+ },
+ {
+  "id": "e791aa4d81bfbd3f",
+  "text": "What percentage of the Earth's surface is covered by water?"
+ },
+ {
+  "id": "202ff44ac97d1956",
+  "text": "Roughly what percentage of an adult human body is water?"
+ },
+ {
+  "id": "6865813cb660e8e2",
+  "text": "Roughly how many litres of blood are in an adult human body?"
+ },
+ {
+  "id": "85ed1b0e1f52f83d",
+  "text": "Roughly how much does an adult human brain weigh?"
+ },
+ {
+  "id": "b799ec1dbe2fe0e5",
+  "text": "How fast can a cheetah run at top speed?"
+ },
+ {
+  "id": "9b7ce61be2080181",
+  "text": "How many months is an elephant pregnant?"
+ },
+ {
+  "id": "3b07f8d32fda6538",
+  "text": "Roughly how many people live on Earth?"
+ },
+ {
+  "id": "b0ee0809be3d8bf0",
+  "text": "How many seconds are in one hour?"
+ },
+ {
+  "id": "f728cac93bbbf84e",
+  "text": "How many hours are in one week?"
+ },
+ {
+  "id": "923b2307ec73df1b",
+  "text": "How many feet are in one mile?"
+ },
+ {
+  "id": "fe59516f6c06443a",
+  "text": "How many centimetres are in one inch?"
+ },
+ {
+  "id": "ee3c2988b94d2aac",
+  "text": "How many kilometres are in one mile?"
+ },
+ {
+  "id": "091103f802ab50bd",
+  "text": "How many grams are in one pound?"
+ },
+ {
+  "id": "71bf37023f144383",
+  "text": "How many pounds are in one stone?"
+ },
+ {
+  "id": "8904f8eb643cb5b6",
+  "text": "How many ounces are in one pound?"
+ },
+ {
+  "id": "1f8a3cc55071668a",
+  "text": "What is the 100 metre world record time, set by Usain Bolt?"
+ },
+ {
+  "id": "38f3ed222ac794ae",
+  "text": "The worst gift you ever got"
+ },
+ {
+  "id": "952e30ddc4317080",
+  "text": "Your go-to karaoke song"
+ },
+ {
+  "id": "a2381e92d17b061e",
+  "text": "A food you secretly hate"
+ },
+ {
+  "id": "0da1fb43ae538e9d",
+  "text": "Your most useless talent"
+ },
+ {
+  "id": "4fb4810530fb65c5",
+  "text": "The first thing you would buy with a million euros"
+ },
+ {
+  "id": "5a094380941d77be",
+  "text": "A movie you could watch a hundred times"
+ },
+ {
+  "id": "88231b49f177f9bd",
+  "text": "Your dream job as a kid"
+ },
+ {
+  "id": "61b2fd88d36573db",
+  "text": "The weirdest thing in your fridge right now"
+ },
+ {
+  "id": "66be704240e3147d",
+  "text": "Your signature dance move, described in a few words"
+ },
+ {
+  "id": "3d96c3e876b5940b",
+  "text": "A celebrity you would want as a roommate"
+ },
+ {
+  "id": "d9ec9caf503c3fe2",
+  "text": "The best smell in the world"
+ },
+ {
+  "id": "6c610cd8828cae2e",
+  "text": "Your guilty pleasure TV show"
+ },
+ {
+  "id": "4eabe3c9fb8c9550",
+  "text": "An animal you would be in a past life"
+ },
+ {
+  "id": "cc4e1d41034db5ef",
+  "text": "The worst haircut you ever had"
+ },
+ {
+  "id": "3107104f3e6ecfa6",
+  "text": "A word you always spell wrong"
+ },
+ {
+  "id": "c661cabba3ad9eb5",
+  "text": "Your most-used emoji"
+ },
+ {
+  "id": "7d890582e41513cc",
+  "text": "The best pizza topping (fight me)"
+ },
+ {
+  "id": "ad1662754c087d1a",
+  "text": "Something you are weirdly scared of"
+ },
+ {
+  "id": "d1b0fc891ee2b987",
+  "text": "Your ideal Sunday in five words"
+ },
+ {
+  "id": "35e68df33de1c56a",
+  "text": "A song that is stuck in your head way too often"
+ },
+ {
+  "id": "f2fe3f2008a28357",
+  "text": "The best thing you ever cooked"
+ },
+ {
+  "id": "9ca37570668881e5",
+  "text": "Your most embarrassing phone autocorrect"
+ },
+ {
+  "id": "aad088f387e063ec",
+  "text": "A superpower you would pick"
+ },
+ {
+  "id": "e2dcfe5d5c1c95fe",
+  "text": "The game you were way too obsessed with"
+ },
+ {
+  "id": "77fd8799de818b03",
+  "text": "A rule you would add to every country"
+ },
+ {
+  "id": "7d311e82f7b302d2",
+  "text": "Your favourite smell from childhood"
+ },
+ {
+  "id": "d42d688ea832bf97",
+  "text": "The worst job you could imagine"
+ },
+ {
+  "id": "1585648b235d1737",
+  "text": "The name you would give a pet dragon"
+ },
+ {
+  "id": "54ccbaaae9d7d00d",
+  "text": "Your secret comfort food"
+ },
+ {
+  "id": "392dc5012e5d236e",
+  "text": "Something you lost and never found"
+ },
+ {
+  "id": "60de561f178e82a4",
+  "text": "Your perfect holiday destination"
+ },
+ {
+  "id": "d35902ca8a5b42db",
+  "text": "A trend you are glad is over"
+ },
+ {
+  "id": "45a8bc8d251a2ace",
+  "text": "The most overrated thing ever"
+ },
+ {
+  "id": "ca48b3eedddb7c10",
+  "text": "Your hidden hobby"
+ },
+ {
+  "id": "fdfce053fd25499a",
+  "text": "What you would name your boat"
+ },
+ {
+  "id": "b5440205c33a6877",
+  "text": "The best snack at the cinema"
+ },
+ {
+  "id": "07632de8e41775b7",
+  "text": "A fictional character you would date"
+ },
+ {
+  "id": "a95383fa3df8a89e",
+  "text": "The first concert you went to (or would go to)"
+ },
+ {
+  "id": "ac2b9140f4d32fa7",
+  "text": "Your useless fact that you love telling people"
+ },
+ {
+  "id": "29d691ded8f451eb",
+  "text": "What your last search on your phone was about"
+ },
+ {
+  "id": "e5d4919d9819841c",
+  "text": "Your walk-out song if you were a wrestler"
+ },
+ {
+  "id": "4ebb41f7cdf1b1cf",
+  "text": "A smell you cannot stand"
+ },
+ {
+  "id": "6c7c1f647357fdcf",
+  "text": "Your worst cooking disaster"
+ },
+ {
+  "id": "ecf5b53e94541a00",
+  "text": "The best gift you ever gave"
+ },
+ {
+  "id": "6badf0e3426ab085",
+  "text": "The house rule you hate the most"
+ },
+ {
+  "id": "7fbada139571ac56",
+  "text": "Your favourite word"
+ },
+ {
+  "id": "f2080e8f5074b713",
+  "text": "The strangest thing you believed as a kid"
+ },
+ {
+  "id": "09f2b43a2ffb738c",
+  "text": "A small thing that makes your day better"
+ },
+ {
+  "id": "68bc820a10d1c464",
+  "text": "The app you open the most"
+ },
+ {
+  "id": "2cf5ec9ba402cc1e",
+  "text": "Your favourite cartoon growing up"
+ },
+ {
+  "id": "88c14f4cf5c7af47",
+  "text": "What you would do with one day of invisibility"
+ },
+ {
+  "id": "103010fbe5e331da",
+  "text": "A famous person you look a bit like"
+ },
+ {
+  "id": "fc79207558599f51",
+  "text": "Your most-played song this year"
+ },
+ {
+  "id": "ed4983ea68bdfaac",
+  "text": "Something you are proud of but nobody cares about"
+ },
+ {
+  "id": "6a1053f4a3df30f8",
+  "text": "The worst advice you ever got"
+ },
+ {
+  "id": "87d9587341eefe49",
+  "text": "Your dream car"
+ },
+ {
+  "id": "eca309cb58ea31e3",
+  "text": "A fear you got over"
+ },
+ {
+  "id": "b66373fc2fef75ce",
+  "text": "The last thing that made you laugh out loud"
+ },
+ {
+  "id": "ce797b23ca321da1",
+  "text": "Your most chaotic school memory"
+ },
+ {
+  "id": "6e99db0d59f2777e",
+  "text": "The board game you always win (or lose)"
+ },
+ {
+  "id": "ac8d9d56a7561cf4",
+  "text": "A sound that makes you happy"
+ },
+ {
+  "id": "6a8730166986fb9b",
+  "text": "The most expensive thing you ever broke"
+ },
+ {
+  "id": "ec78d66786533f1b",
+  "text": "Your best excuse for being late"
+ },
+ {
+  "id": "b6b00275202bbce6",
+  "text": "A dish you could eat every day"
+ },
+ {
+  "id": "8aef53ccd7f47eeb",
+  "text": "The weirdest place you ever fell asleep"
+ },
+ {
+  "id": "1af5929296c455a2",
+  "text": "The title of your autobiography"
+ },
+ {
+  "id": "0a2c1e51ecb8b50b",
+  "text": "Your zombie apocalypse weapon"
+ },
+ {
+  "id": "1ffe3e6a5eca0bc7",
+  "text": "A habit you wish you could stop"
+ },
+ {
+  "id": "77c1611c78336e9b",
+  "text": "The best season of the year and why, in a few words"
+ },
+ {
+  "id": "33c1cc0b65df09b5",
+  "text": "Your favourite thing about this group"
+ },
+ {
+  "id": "2d46308376f71428",
+  "text": "The thing you would grab first in a fire (after people and pets)"
+ },
+ {
+  "id": "2cf9117f861249e2",
+  "text": "Your celebrity crush as a kid"
+ },
+ {
+  "id": "baa74191ba8fb7cd",
+  "text": "The worst movie you ever saw"
+ },
+ {
+  "id": "b65fa7923cf4816b",
+  "text": "A skill you want to learn this year"
+ },
+ {
+  "id": "44a746933b0d1382",
+  "text": "The best present you got as a kid"
+ },
+ {
+  "id": "105380c610be9247",
+  "text": "Your morning routine in five words"
+ },
+ {
+  "id": "45c77eecada2f724",
+  "text": "What you would be famous for"
+ },
+ {
+  "id": "3c650026be8144a6",
+  "text": "The pettiest thing that annoys you"
+ },
+ {
+  "id": "d8c53984cf77be43",
+  "text": "Your favourite sweet from the shop"
+ },
+ {
+  "id": "769aba42e849279a",
+  "text": "Your phone wallpaper right now"
  }
 ]

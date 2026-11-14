@@ -106,6 +106,73 @@ function phase(a, b) {
       break;
     }
 
+    // Closest Call
+    case 'cguess':
+      say(line(b.close?.double ? 'closeDouble' : 'closeGo'), { interrupt: true, maxWait: 2000 });
+      read(b, b.close?.q, { interrupt: false, maxWait: 5000 });
+      break;
+    case 'creveal': {
+      const spot = Object.values(b.close?.results || {}).some((r) => r.spot);
+      say(line(spot ? 'closeSpot' : 'closeReveal'), { interrupt: true });
+      break;
+    }
+
+    // Timeline
+    case 'tguess': if (b.line?.round === 1 || chance(0.35)) say(line('lineGo'), { interrupt: true }); break;
+    case 'treveal': {
+      const perfect = Object.values(b.line?.results || {}).some((r) => r.perfect);
+      say(line(perfect ? 'linePerfect' : 'lineReveal'), { interrupt: true });
+      break;
+    }
+
+    // Who Wrote That?
+    case 'wwrite':
+      read(b, b.who?.prompt);
+      say(line('whoWrite'), { maxWait: 6000 });
+      break;
+    case 'wguess': if (b.who?.idx === 0 || chance(0.3)) say(line('whoGuess'), { interrupt: true }); break;
+    case 'wshow': {
+      const w = b.who;
+      const right = Object.values(w?.guesses || {}).filter((p) => p === w.author).length;
+      if (!right && count(w?.guesses)) say(line('whoFooled'), { interrupt: true });
+      else if (right && chance(0.6)) say(line('whoRight'), { interrupt: true });
+      break;
+    }
+
+    // Odd One Out
+    case 'oclue': say(line('oddClue'), { interrupt: true }); break;
+    case 'ovote': say(line('oddVote'), { interrupt: true }); break;
+    case 'oguess': say(line('oddCaught'), { interrupt: true }); break;
+    case 'oresult': {
+      const o = b.odd;
+      if (!o) break;
+      const away = o.spies.some((p) => !o.caught.includes(p));
+      const stole = Object.keys(o.stole || {}).length;
+      say(line(away ? 'oddEscaped' : stole ? 'oddStole' : 'oddWin'), { interrupt: true });
+      break;
+    }
+
+    // Scribble Chain
+    case 'scwrite': say(line('scWrite'), { interrupt: true }); break;
+    case 'scdraw': say(line('scDraw'), { interrupt: true }); break;
+    case 'scdesc': say(line('scDesc'), { interrupt: true }); break;
+    case 'scshow': if (b.chain?.showIdx === 0 || chance(0.4)) say(line('scShow'), { interrupt: true, maxWait: 1500 }); break;
+    case 'scvote': if (b.chain?.showIdx === 0 || chance(0.3)) say(line('scVote'), { interrupt: true }); break;
+
+    // Memory Sketch
+    case 'mlook': if (b.sketch?.round === 1 || chance(0.4)) say(line('memLook'), { interrupt: true, maxWait: 800 }); break;
+    case 'mdraw': if (b.sketch?.round === 1 || chance(0.4)) say(line('memDraw'), { interrupt: true }); break;
+    case 'mreveal': {
+      const great = Object.values(b.sketch?.results || {}).some((r) => r.pts >= 800);
+      say(line(great ? 'memGreat' : 'memReveal'), { interrupt: true });
+      break;
+    }
+
+    // Reflex Rumble: explain each mini game before it starts, never during it.
+    case 'rready': if (b.reflex?.game) say(line(`reflex_${b.reflex.game}`), { interrupt: true, maxWait: 1000 }); break;
+    case 'rgo': hush(); break;
+    case 'rresult': if (chance(0.5)) say(line('reflexWin'), { interrupt: true }); break;
+
     case 'end': {
       const r = b.results;
       if (!r) break;
@@ -132,7 +199,7 @@ function step(a, b) {
 }
 
 // Long timed phases where a "hurry up" fits at 5 seconds left.
-const HURRY = new Set(['lie', 'pick', 'ddraw', 'pguess', 'finalBet', 'finalQ', 'wq']);
+const HURRY = new Set(['lie', 'pick', 'ddraw', 'pguess', 'finalBet', 'finalQ', 'wq', 'cguess', 'tguess', 'wwrite', 'oclue', 'ovote', 'scdraw', 'mdraw']);
 
 /** Call once when a countdown reaches 5 seconds. */
 export function lewisHurry(s) {

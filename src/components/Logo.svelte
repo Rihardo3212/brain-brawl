@@ -2,10 +2,10 @@
   let { size = 1 } = $props();
 </script>
 
-<div class="logo" style="--s:{size}" aria-label="Brain Brawl">
-  <span class="w one">BRAIN</span>
-  <span class="bolt">⚡</span>
-  <span class="w two">BRAWL</span>
+<div class="logo" style="--s:{size}" aria-label="Party Pit">
+  <span class="w one">PARTY</span>
+  <span class="bolt">🎉</span>
+  <span class="w two">PIT</span>
 </div>
 
 <style>

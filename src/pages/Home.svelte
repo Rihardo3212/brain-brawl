@@ -3,7 +3,7 @@
   import { cleanCode } from '../lib/room.js';
   import { isLocal } from '../lib/db.js';
   import { DEVELOPER } from '../lib/brand.js';
-  import { MODES, MODE_LIST } from '../lib/modes.js';
+  import { MODES, MODE_LIST, GROUP_LIST, modesIn } from '../lib/modes.js';
   import { unlockAudio } from '../lib/sound.js';
   import { getTheme, toggleTheme } from '../lib/theme.js';
 
@@ -20,7 +20,7 @@
 <button class="icon-btn theme" onclick={() => (theme = toggleTheme())} aria-label="Theme">{theme === 'dark' ? '☀️' : '🌙'}</button>
 <main>
   <div class="hero pop-in"><Logo size={1.35} /></div>
-  <p class="tag">The party quiz where your phone is the buzzer.</p>
+  <p class="tag">The party game where your phone is the controller.</p>
 
   <div class="choices">
     <section class="card choice">
@@ -41,16 +41,19 @@
     </section>
   </div>
 
-  <div class="modes">
-    {#each MODE_LIST as id, i}
-      {@const m = MODES[id]}
-      <div class="mode card slide-up" style="--mc:{m.color}; animation-delay:{i * 90}ms">
-        <span class="icon-tile" style="--sz:58px">{m.icon}</span>
-        <b>{m.name}</b>
-        <span class="muted">{m.tagline}</span>
-      </div>
-    {/each}
-  </div>
+  {#each GROUP_LIST as g}
+    <h3 class="ghead"><span>{g.icon}</span> {g.label}</h3>
+    <div class="modes">
+      {#each modesIn(g.id) as id}
+        {@const m = MODES[id]}
+        <div class="mode card slide-up" style="--mc:{m.color}; animation-delay:{MODE_LIST.indexOf(id) * 70}ms">
+          <span class="icon-tile" style="--sz:58px">{m.icon}</span>
+          <b>{m.name}</b>
+          <span class="muted">{m.tagline}</span>
+        </div>
+      {/each}
+    </div>
+  {/each}
 
   <a class="btn ghost" href="#/how">How to play</a>
 
@@ -74,6 +77,7 @@
   .emoji { font-size: 2.8rem; filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.25)); }
   form { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; }
   .code { letter-spacing: 0.4em; text-transform: uppercase; }
+  .ghead { margin: 0.4rem 0 -0.6rem; font-size: 1.5rem; width: 100%; text-align: left; }
   .modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.9rem; width: 100%; }
   .mode { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.1rem 0.8rem; }
   .mode b { font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; color: var(--mc); }

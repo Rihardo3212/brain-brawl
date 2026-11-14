@@ -9,6 +9,8 @@ import { NUMERIC } from './numeric.js';
 import { FINALS } from './finals.js';
 import { FAKEOUT } from './fakeout.js';
 import { PLACES } from './places.js';
+import { CLOSEST } from './closest.js';
+import { PROMPTS } from './whowrote.js';
 
 export const LINES = {
   // ---------- lobby / start ----------
@@ -18,7 +20,7 @@ export const LINES = {
     "Hello, hello! Somebody's keen. I like that."
   ],
   lobbyJoin: [
-    "Another brain joins the brawl!",
+    "Another challenger enters the pit!",
     "Welcome aboard! Mind the gap.",
     "Ooh, fresh competition!",
     "The more the merrier. And the louder.",
@@ -30,11 +32,11 @@ export const LINES = {
     "Artists, assemble! Draw your team picture. Quickly now!"
   ],
   welcome: [
-    "Good evening, and welcome to Brain Brawl! Where brains go to brawl. It's in the name!",
-    "Hello, hello, hello! Welcome to Brain Brawl! I'm your host, Lewis, and I've been polished for the occasion.",
-    "Ladies and gentlemen, and that one friend who always argues with the answers. Welcome to Brain Brawl!",
-    "Welcome to Brain Brawl! Phones out, thinking caps on, biscuits within reach.",
-    "It's showtime! Welcome to Brain Brawl, the only show where being a know-it-all is finally a good thing!"
+    "Good evening, and welcome to Party Pit! Where friendships go to be tested. Lovingly.",
+    "Hello, hello, hello! Welcome to Party Pit! I'm your host, Lewis, and I've been polished for the occasion.",
+    "Ladies and gentlemen, and that one friend who always argues with the answers. Welcome to Party Pit!",
+    "Welcome to Party Pit! Phones out, thinking caps on, biscuits within reach.",
+    "It's showtime! Welcome to Party Pit, the only show where showing off is finally a good thing!"
   ],
   intro_board: [
     "This is Brain Board! Pick a tile, buzz in first, and don't embarrass yourselves.",
@@ -55,6 +57,34 @@ export const LINES = {
   intro_pindrop: [
     "Pin Drop! Look at the photo and stick a pin where you think it is. Geography teachers, this is your moment.",
     "It's Pin Drop! Where in the world are we? Drop your pin and find out!"
+  ],
+  intro_closest: [
+    "This is Closest Call! Guess the number. Closest guess wins the points.",
+    "Closest Call! You don't have to know the answer. Just be closer than your mates."
+  ],
+  intro_timeline: [
+    "This is Timeline! Put the events in order, oldest first. Fast and right wins big.",
+    "Timeline! Which came first? Sort it out, quick as you can."
+  ],
+  intro_whowrote: [
+    "This is Who Wrote That! Answer a fun question, then guess who wrote what.",
+    "Who Wrote That! How well do you really know your friends? Let's find out."
+  ],
+  intro_oddone: [
+    "This is Odd One Out! Everyone gets a secret word, except the spy. Find the spy!",
+    "Odd One Out! One of you is a spy. Give clues, then vote them out."
+  ],
+  intro_scribble: [
+    "This is Scribble Chain! Write it, draw it, guess it, pass it on. Chaos guaranteed.",
+    "Scribble Chain! Like the telephone game, but with terrible drawings."
+  ],
+  intro_sketch: [
+    "This is Memory Sketch! Look at the drawing, then draw it from memory.",
+    "Memory Sketch! A quick look, then copy it. The closer the better."
+  ],
+  intro_reflex: [
+    "This is Reflex Rumble! Quick little challenges. Fingers at the ready!",
+    "Reflex Rumble! Tap, mash and shake your way to glory."
   ],
 
   // ---------- Brain Board ----------
@@ -231,6 +261,162 @@ export const LINES = {
   ],
 
   // ---------- any mode ----------
+  // ---------- Closest Call ----------
+  closeGo: [
+    "Type your best guess. Closest wins!",
+    "Numbers on your phones, please. Close counts here!",
+    "No need to be right. Just be less wrong than everyone else."
+  ],
+  closeDouble: [
+    "Last one, and it counts double! Guess wisely.",
+    "Final question, double points! This is where legends are made."
+  ],
+  closeSpot: [
+    "Spot on! Are you a calculator in disguise?",
+    "Bang on the money! I'm genuinely impressed. And slightly scared."
+  ],
+  closeReveal: [
+    "Let's see who got closest!",
+    "And the real answer is...",
+    "Right, line them up. Who's nearest?"
+  ],
+
+  // ---------- Timeline ----------
+  lineGo: [
+    "Put them in order, oldest first!",
+    "History time! Which came first?",
+    "Sort them out, from long ago to not so long ago."
+  ],
+  linePerfect: [
+    "A perfect timeline! Somebody paid attention in history class.",
+    "Flawless! You must own a time machine."
+  ],
+  lineReveal: [
+    "Let's see the real order!",
+    "And here's how history actually went...",
+    "Drumroll for the history books!"
+  ],
+
+  // ---------- Who Wrote That? ----------
+  whoWrite: [
+    "Write your answer! Be honest. Or don't. I won't tell.",
+    "Answers on your phones, please. Disguise your style if you're sneaky!",
+    "Time to write! Remember, your friends are watching. Well, guessing."
+  ],
+  whoGuess: [
+    "Who wrote that? Look around the room. Somebody's blushing.",
+    "Hmm, who would write something like that?",
+    "Whose answer is this? Choose wisely!"
+  ],
+  whoRight: [
+    "Rumbled! You know your friends too well.",
+    "Caught red handed!",
+    "No secrets in this room, apparently."
+  ],
+  whoFooled: [
+    "Nobody guessed it! What a master of disguise.",
+    "Fooled the lot of you! Bravo, you sneaky thing."
+  ],
+
+  // ---------- Odd One Out ----------
+  oddClue: [
+    "There's a spy among us! Everyone else, give a clue. One word. Not too obvious!",
+    "One of you doesn't know the word. Type your clue, and act natural.",
+    "Shh! The spy is listening. One word clues, please."
+  ],
+  oddVote: [
+    "Right, who's the spy? Vote now!",
+    "Look at those clues. Somebody's bluffing. Who is it?",
+    "Point the finger! Who's the odd one out?"
+  ],
+  oddCaught: [
+    "Caught you! But wait, the spy gets one guess at the word.",
+    "Gotcha, spy! Now, can you guess the secret word?"
+  ],
+  oddEscaped: [
+    "The spy got away! Nobody suspected a thing.",
+    "Wrong person! The real spy is having a lovely evening.",
+    "Sneaky, sneaky! The spy escapes!"
+  ],
+  oddWin: [
+    "Spy caught! Well done, detectives.",
+    "Justice is served! Points for the honest folk."
+  ],
+  oddStole: [
+    "Caught, but they guessed the word! Cheeky!",
+    "The spy knew it all along! Well played."
+  ],
+
+  // ---------- Scribble Chain ----------
+  scWrite: [
+    "Write something silly for the next person to draw!",
+    "Prompts, please! The sillier the better.",
+    "Write a little idea. Your friends will ruin it beautifully."
+  ],
+  scDraw: [
+    "Now draw what you got! No letters, no cheating.",
+    "Artists, it's your moment. Draw!",
+    "Draw it! It doesn't have to be good. It really doesn't."
+  ],
+  scDesc: [
+    "What on earth is that? Describe the drawing!",
+    "Look at that masterpiece. What is it?",
+    "Guess the drawing! Be kind. Or honest."
+  ],
+  scShow: [
+    "Let's see how that chain turned out!",
+    "Here comes the chain! Brace yourselves.",
+    "Watch carefully. This is where it all goes wrong."
+  ],
+  scVote: [
+    "Vote for your favorite step!",
+    "Which bit was the best? Vote now!"
+  ],
+
+  // ---------- Memory Sketch ----------
+  memLook: [
+    "Look closely! You'll draw it from memory.",
+    "Eyes on the screen! Remember every line.",
+    "Memorise this! It won't stay long."
+  ],
+  memDraw: [
+    "Now draw it from memory! Go!",
+    "Gone! Draw what you remember.",
+    "Pens out! How good is your memory?"
+  ],
+  memGreat: [
+    "Wow, a photographic memory!",
+    "Brilliant copies! I'm impressed."
+  ],
+  memReveal: [
+    "Let's compare! Hmm. Interesting choices.",
+    "Here are your drawings. Some of them are... art.",
+    "And how close did you get?"
+  ],
+
+  // ---------- Reflex Rumble ----------
+  reflex_green: [
+    "Wait for green, then tap! Too early and you're out.",
+    "Fingers ready! Tap the moment it turns green."
+  ],
+  reflex_mash: [
+    "Mash that button! As fast as you can!",
+    "Tapping time! Go wild!"
+  ],
+  reflex_stop5: [
+    "Stop the clock at exactly five seconds. Count in your head!",
+    "Five seconds. No peeking at the clock!"
+  ],
+  reflex_shake: [
+    "Shake your phone! Hold on tight!",
+    "Shake it like you mean it! Not too hard."
+  ],
+  reflexWin: [
+    "Lightning fast!",
+    "What reflexes! Are you even human?",
+    "And we have a winner!"
+  ],
+
   hurry: [
     "Five seconds!",
     "Tick tock! Hurry up!",
@@ -295,6 +481,8 @@ export function allSpokenLines() {
   FINALS.forEach((q) => out.add(q.q));
   FAKEOUT.forEach((p) => out.add(p.text));
   PLACES.forEach((p) => out.add(placeLine(p)));
+  CLOSEST.forEach((q) => out.add(q.q));
+  PROMPTS.forEach((p) => out.add(p));
   return [...out].map((t) => spoken(t)).filter(Boolean);
 }
 

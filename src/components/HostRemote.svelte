@@ -5,6 +5,7 @@
   import { MAX_SOLO, TEAMS } from '../lib/room.js';
   import { WEDGES } from '../content/wedges.js';
   import { photoUrl } from '../engine/pindrop.js';
+  import { formatNum, questionById } from '../engine/closest.js';
 
   let { s, send, avatars = {} } = $props();
 
@@ -17,6 +18,11 @@
   const allJudged = $derived(fin ? units.every((u) => fin.judged[u.id] !== undefined) : false);
   const count = (o) => Object.keys(o || {}).length;
   const vibe = (ms = 30) => navigator.vibrate?.(ms);
+  // Phases where the host can only skip ahead: [emoji, button text]
+  const SKIPPABLE = {
+    mlook: ['👀', 'Start drawing now'], mdraw: ['✏️', 'Reveal now'], mreveal: ['🖼️', 'Next drawing'],
+    rready: ['⚡', 'Go now'], rgo: ['⏱️', 'End this game'], rresult: ['🏆', 'Next game']
+  };
 </script>
 
 <div class="remote stack">
@@ -158,6 +164,77 @@
       {#if s.phase === 'pguess'}<p class="muted">{count(f.pins)} / {players.length} pins dropped{f.hint ? ` · hint shown: ${f.hint}` : ''}</p>{/if}
     </div>
     <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'pguess' ? 'Reveal now' : 'Next photo'}</button>
+
+  <!-- Timeline -->
+  {:else if (s.phase === 'tguess' || s.phase === 'treveal') && s.line?.years}
+    {@const l = s.line}
+    <div class="card stack">
+      <span class="muted">📅 Round {l.round} of {l.rounds}</span>
+      {#each [...l.cards].sort((a, b) => l.years[a.id] - l.years[b.id]) as c}
+        <div class="row between"><span>{c.e} {c.t}</span><b>{l.years[c.id]}</b></div>
+      {/each}
+      {#if s.phase === 'tguess'}<p class="muted">{count(l.orders)} / {players.length} locked in</p>{/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'tguess' ? 'Reveal now' : 'Next round'}</button>
+
+  <!-- Closest Call -->
+  {:else if (s.phase === 'cguess' || s.phase === 'creveal') && s.close?.answer !== null && s.close}
+    {@const c = s.close}
+    <div class="card stack">
+      <span class="muted">🎯 Question {c.round} of {c.rounds}{c.double ? ' · double points' : ''}</span>
+      <h3>{c.q}</h3>
+      <div class="ans">✅ {formatNum(c.answer, questionById(c.id))}{c.unit ? ` ${c.unit}` : ''}</div>
+      {#if s.phase === 'cguess'}<p class="muted">{count(c.guesses)} / {players.length} guesses in</p>{/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'cguess' ? 'Reveal now' : 'Next question'}</button>
+
+  <!-- Scribble Chain -->
+  {:else if ['scwrite', 'scdraw', 'scdesc', 'scshow', 'scvote'].includes(s.phase) && s.chain}
+    {@const c = s.chain}
+    <div class="card stack center">
+      <div class="bigemoji">🔗</div>
+      {#if ['scwrite', 'scdraw', 'scdesc'].includes(s.phase)}
+        <h3>Step {c.step + 1} of {c.len}</h3>
+        <p class="muted">{count(c.done)} / {c.order.length} done</p>
+      {:else}
+        <h3>Chain {c.showIdx + 1} of {c.order.length}</h3>
+        {#if s.phase === 'scvote'}<p class="muted">{c.tallied ? 'Votes counted' : `${count(c.votes)} votes in`}</p>{/if}
+      {/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'scshow' ? 'Next step' : s.phase === 'scvote' ? (c.tallied ? 'Next chain' : 'Count the votes') : 'Move on now'}</button>
+
+  <!-- Odd One Out -->
+  {:else if ['oclue', 'ovote', 'oguess', 'oresult'].includes(s.phase) && s.odd}
+    {@const o = s.odd}
+    <div class="card stack">
+      <span class="muted">🕵️ Round {o.round} of {o.rounds} · {o.icon} {o.cat}</span>
+      <div class="ans">🤫 {o.word}</div>
+      <p>🕵️ Spy: <b>{o.spies.map((p) => P(p)?.name).join(' & ')}</b></p>
+      {#if s.phase === 'oclue'}<p class="muted">{count(o.clues)} / {players.length} clues in</p>{/if}
+      {#if s.phase === 'ovote'}<p class="muted">{count(o.votes)} / {players.length} votes in</p>{/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'oclue' ? 'Start voting now' : s.phase === 'ovote' ? 'Count the votes' : s.phase === 'oguess' ? 'Show the result' : 'Next round'}</button>
+
+  <!-- Who Wrote That? -->
+  {:else if ['wwrite', 'wguess', 'wshow'].includes(s.phase) && s.who}
+    {@const w = s.who}
+    <div class="card stack">
+      <span class="muted">📝 Prompt {w.round} of {w.rounds}</span>
+      <h3>{w.prompt}</h3>
+      {#if s.phase === 'wwrite'}
+        <p class="muted">{count(w.answers)} / {players.length} answers in</p>
+      {:else}
+        <div class="ans">“{w.text}”</div>
+        <p>✍️ Written by <b>{P(w.queue[w.idx])?.name}</b></p>
+        {#if s.phase === 'wguess'}<p class="muted">{count(w.guesses)} guesses in</p>{/if}
+      {/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'wwrite' ? 'Start guessing now' : s.phase === 'wguess' ? 'Reveal now' : 'Next answer'}</button>
+
+  <!-- Modes without secrets: just a skip button -->
+  {:else if SKIPPABLE[s.phase]}
+    <div class="card stack center"><div class="bigemoji">{SKIPPABLE[s.phase][0]}</div><h3>Watch the big screen!</h3></div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{SKIPPABLE[s.phase][1]}</button>
 
   {:else if s.phase === 'end'}
     <div class="card stack center">
