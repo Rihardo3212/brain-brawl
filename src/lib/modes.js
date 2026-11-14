@@ -108,8 +108,8 @@ export const MODES = {
   pindrop: {
     id: 'pindrop',
     steps: [
-      { icon: '🖼️', label: 'A photo of a place' },
-      { icon: '🗺️', label: 'Drop a pin on your map' },
+      { icon: '🗺️', label: 'Pin where the photo was taken' },
+      { icon: '⏩', label: 'Lock in fast to rush the others' },
       { icon: '📏', label: 'Closer = more points', tag: 'up to 1000' },
       { icon: '🎯', label: 'Last photo counts double' }
     ],
@@ -120,7 +120,8 @@ export const MODES = {
     how: [
       'A photo of a place appears on the big screen.',
       'Zoom the map on your phone and drop a pin where you think it is.',
-      'The closer your pin, the more points (up to 1000). Halfway through, a hint shows the region.',
+      'Every pin that locks in cuts the clock for everyone else. Put on the pressure!',
+      'The closer your pin, the more points (up to 1000). If nobody has pinned by halfway, a hint shows the region.',
       'In teams, everyone pins and the closest pin counts. The last photo is worth double.'
     ],
     min: 1,

@@ -244,6 +244,7 @@
     // Pin Drop
     if (b.pin && a.pin && b.phase === 'pguess' && a.phase === 'pguess') {
       if (count(b.pin.pins) > count(a.pin.pins)) sfx.bloop();
+      if (b.pin.rush > a.pin.rush) setTimeout(() => sfx.rise(), 120);
       if (b.pin.hint && !a.pin.hint) sfx.reveal();
     }
     // Doodle Dash

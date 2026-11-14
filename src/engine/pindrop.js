@@ -7,6 +7,8 @@ import { shuffle } from './util.js';
 export const T = { guess: 45000, intro: 2500, reveal: 12000 };
 export const BULLSEYE_KM = 25;
 export const MAX_POINTS = 1000;
+// Each locked pin keeps 65% of the time left, but never drops it below 8 seconds.
+export const RUSH = { keep: 0.65, min: 8000 };
 
 // Places shown recently in this browser, so a rematch gets new photos.
 const seen = new Set();
@@ -66,6 +68,8 @@ function startRound(g) {
   const place = placeById(f.id);
   f.answer = s.mode === 'host' ? reveal(place) : null; // only the host sees it early
   f.hint = null;
+  f.rush = 0;
+  f.rushBy = null;
   f.pins = {};
   f.results = {};
   f.best = {};
@@ -89,8 +93,17 @@ function dropPin(g, from, input) {
   lat = Math.max(-85, Math.min(85, lat));
   lng = ((((lng + 180) % 360) + 360) % 360) - 180;
   f.pins[from] = { lat: Math.round(lat * 1e4) / 1e4, lng: Math.round(lng * 1e4) / 1e4 };
-  if (!waitingOn(g).length) startReveal(g);
-  else g.save();
+  if (!waitingOn(g).length) { startReveal(g); return; }
+  // Pressure: every locked pin cuts the time left for everyone else.
+  const now = g.now();
+  const left = f.until - now;
+  const cut = Math.max(RUSH.min, Math.round(left * RUSH.keep));
+  if (cut < left) {
+    f.until = now + cut;
+    f.rush = (f.rush || 0) + 1;
+    f.rushBy = from;
+  }
+  g.save();
 }
 
 function startReveal(g) {
@@ -134,6 +147,8 @@ export default {
       f.answer = f.answer ?? null;
       f.hint = f.hint ?? null;
       f.double = !!f.double;
+      f.rush = f.rush || 0;
+      f.rushBy = f.rushBy ?? null;
     }
   },
   reset(s) { s.pin = null; },
@@ -157,7 +172,8 @@ export default {
     const f = s.pin;
     if (!f) return;
     if (s.phase === 'pguess') {
-      if (!f.hint && now >= f.hintAt) { f.hint = placeById(f.id).hint; g.save(); }
+      // The hint only helps when nobody has a clue yet.
+      if (!f.hint && now >= f.hintAt && !Object.keys(f.pins).length) { f.hint = placeById(f.id).hint; g.save(); }
       if (now >= f.until) startReveal(g);
     } else if (s.phase === 'preveal' && now >= f.nextAt) next(g);
   }

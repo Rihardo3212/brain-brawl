@@ -46,6 +46,9 @@
       <div class="under">
         <div class="sticker big tilt-r">🗺️ Where in the world is this?</div>
         {#if f.hint}<div class="sticker hint pop-in">🧭 Hint: {f.hint}</div>{/if}
+        {#if f.rush > 0}
+          {#key f.rush}<div class="sticker rush pop-in">⏩ {s.players[f.rushBy]?.name || 'Someone'} locked in. Faster!</div>{/key}
+        {/if}
       </div>
       <div class="locks">
         {#each players as p (p.id)}
@@ -55,7 +58,9 @@
           </div>
         {/each}
       </div>
-      <div class="tw"><Timer until={f.until} total={T.guess + T.intro} {now} /><span class="secs-big">{secs(f.until)}</span></div>
+      <div class="tw" class:rushed={f.rush > 0}>
+        <Timer until={f.until} total={T.guess + T.intro} {now} /><span class="secs-big">{secs(f.until)}</span>
+      </div>
 
     {:else if s.phase === 'preveal' && f.answer}
       <div class="reveal">
@@ -104,7 +109,10 @@
   .locks { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; }
   .lock { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; opacity: 0.5; transition: all 0.2s; }
   .lock.on { opacity: 1; transform: translateY(-4px); }
-  .tw { width: 100%; max-width: 640px; display: flex; align-items: center; gap: 1rem; }
+  .tw { width: 100%; max-width: 640px; display: flex; align-items: center; gap: 1rem; position: relative; }
+  .tw.rushed .secs-big { color: #ff8a1f; animation: rush-beat 0.5s ease-in-out infinite alternate; }
+  .rush { font-size: 1.4rem; background: #ff8a1f; color: #fff; box-shadow: 0 8px 20px -6px rgba(255, 138, 31, 0.7); }
+  @keyframes rush-beat { to { transform: scale(1.18); } }
   .secs-big { font-family: var(--font-display); font-size: 1.8rem; min-width: 2.5rem; }
 
   .reveal { display: grid; grid-template-columns: 1fr 380px; gap: 1.2rem; width: 100%; height: max(320px, calc(100vh - 250px)); }
