@@ -3,6 +3,7 @@
   import Host from './pages/Host.svelte';
   import Play from './pages/Play.svelte';
   import How from './pages/How.svelte';
+  import Voice from './pages/Voice.svelte';
 
   let hash = $state(location.hash);
   $effect(() => {
@@ -25,6 +26,8 @@
   {/key}
 {:else if route.page === 'how'}
   <How />
+{:else if route.page === 'voice'}
+  <Voice />
 {:else}
   <Home />
 {/if}

@@ -28,12 +28,24 @@ function ensure() {
   if (!master) {
     master = c.createGain();
     master.gain.value = VOL;
+    duckGain = c.createGain();
     const comp = c.createDynamicsCompressor();
     comp.threshold.value = -18;
     comp.ratio.value = 4;
-    master.connect(comp).connect(c.destination);
+    master.connect(duckGain).connect(comp).connect(c.destination);
   }
   return c;
+}
+
+// Turn the music down while the presenter talks.
+let duckGain = null;
+export function duck(on) {
+  const c = ensure();
+  if (!c) return;
+  const t = c.currentTime;
+  duckGain.gain.cancelScheduledValues(t);
+  duckGain.gain.setValueAtTime(duckGain.gain.value, t);
+  duckGain.gain.linearRampToValueAtTime(on ? 0.28 : 1, t + (on ? 0.15 : 0.6));
 }
 
 /* ---------- instruments ---------- */

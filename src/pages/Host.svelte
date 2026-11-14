@@ -25,6 +25,9 @@
   import { fx } from '../lib/fx.js';
   import { getTheme, toggleTheme } from '../lib/theme.js';
   import { DEVELOPER } from '../lib/brand.js';
+  import Lewis from '../components/Lewis.svelte';
+  import { lewis, setLewisOn, hush } from '../lib/presenter.svelte.js';
+  import { lewisReact, lewisHurry } from '../lib/presenter-cues.js';
 
   let { arg = '' } = $props();
 
@@ -90,6 +93,7 @@
     unsubAvatars?.();
     clearInterval(clock);
     stopMusic();
+    hush();
   });
 
   /* ---------- music, sounds and effects when the game changes ---------- */
@@ -120,6 +124,7 @@
       phaseEffects(a, b);
     }
     stepEffects(a, b);
+    lewisReact(a, b);
   }
 
   function phaseEffects(a, b) {
@@ -269,6 +274,7 @@
     if (!d) { lastTick = null; return; }
     const left = Math.ceil((d - now) / 1000);
     if (left !== lastTick && left > 0 && left <= 5) left % 2 ? sfx.tick() : sfx.tock();
+    if (left !== lastTick && left === 5 && lastTick !== null) lewisHurry(s);
     lastTick = left;
   }
 
@@ -316,6 +322,7 @@
         <button class="btn sun small" onclick={enableSound}>🔊 Turn on sound</button>
       {/if}
       <button class="icon-btn" onclick={() => (theme = toggleTheme())} aria-label="Theme" title="Light / dark">{theme === 'dark' ? '☀️' : '🌙'}</button>
+      <button class="icon-btn" class:off={!lewis.on} onclick={() => { unlockAudio(); setLewisOn(!lewis.on); }} aria-label="Lewis the presenter" title="Lewis, the presenter">🎙️</button>
       <button class="icon-btn" class:off={!music} onclick={toggleMusic} aria-label="Music" title="Music">🎵</button>
       <button class="icon-btn" onclick={toggleSfx} aria-label="Sound effects" title="Sound effects">{muted ? '🔇' : '🔊'}</button>
       <button class="icon-btn" onclick={newRoom} aria-label="New room" title="New room">↻</button>
@@ -349,6 +356,15 @@
   {:else}
     <footer class="footer">a {DEVELOPER} game</footer>
   {/if}
+
+  {#if lewis.on && s}
+    <div class="presenter" class:low={!['lobby', 'end', 'teamdraw', 'intro'].includes(s.phase)} class:quiet={!lewis.speaking}>
+      <Lewis level={lewis.level} talking={lewis.speaking} size={130} />
+      {#if lewis.speaking}
+        <div class="says">{lewis.text}</div>
+      {/if}
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -381,4 +397,20 @@
   .center { flex: 1; display: grid; place-items: center; }
   .stage .pill { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: none; }
   .stage .footer { color: rgba(255, 255, 255, 0.6); }
+
+  /* Lewis lives in the bottom-left corner, above the score bar during rounds. */
+  .presenter {
+    position: fixed; left: 14px; bottom: 10px; z-index: 5;
+    display: flex; align-items: flex-end; gap: 0.6rem; pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.2, 1.4, 0.4, 1), opacity 0.3s;
+  }
+  .presenter.low { bottom: 104px; }
+  .presenter.quiet { transform: scale(0.86); transform-origin: bottom left; opacity: 0.92; }
+  .says {
+    max-width: min(420px, 40vw); margin-bottom: 70px;
+    background: var(--surface); color: var(--ink);
+    border-radius: 20px 20px 20px 6px; padding: 0.7rem 1rem;
+    font-size: 1.1rem; line-height: 1.3; box-shadow: var(--lift);
+    animation: pop-in 0.3s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  }
 </style>
