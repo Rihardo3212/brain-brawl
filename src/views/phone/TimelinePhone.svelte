@@ -10,35 +10,36 @@
   const card = (cid) => l.cards.find((c) => c.id === cid);
 
   // Tap cards from oldest to newest. Tap a placed card to take it back.
-  let picked = $state([]);
-  let sent = false;
-  let lastRound = null;
-  $effect(() => { if (l && l.round !== lastRound) { lastRound = l.round; picked = []; sent = false; } });
+  // Picks are tied to their round, so a new round starts empty right away
+  // (resetting them in an effect let the first render draw last round's cards and crash).
+  let pick = $state({ round: null, ids: [] });
+  let sentRound = null;
+  const picked = $derived(l && pick.round === l.round ? pick.ids.filter((cid) => l.cards.some((c) => c.id === cid)) : []);
 
   const left = $derived(l ? l.cards.filter((c) => !picked.includes(c.id)) : []);
   const full = $derived(!!l && picked.length === l.cards.length);
 
   function place(cid) {
     if (locked) return;
-    picked = [...picked, cid];
+    pick = { round: l.round, ids: [...picked, cid] };
     sfx.pop();
     navigator.vibrate?.(15);
   }
   function unplace(cid) {
     if (locked) return;
-    picked = picked.filter((x) => x !== cid);
+    pick = { round: l.round, ids: picked.filter((x) => x !== cid) };
     sfx.bloop();
   }
   function lock() {
-    if (!full || sent) return;
-    sent = true;
+    if (!full || sentRound === l.round) return;
+    sentRound = l.round;
     navigator.vibrate?.([40, 30, 80]);
     send('torder', { order: picked });
   }
   // Out of time: send whatever order is there, filling the rest in the order shown.
   $effect(() => {
     if (s.phase === 'tguess' && !locked && picked.length && l.until - now < 1200) {
-      picked = [...picked, ...left.map((c) => c.id)];
+      pick = { round: l.round, ids: [...picked, ...left.map((c) => c.id)] };
       lock();
     }
   });
