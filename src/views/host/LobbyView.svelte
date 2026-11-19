@@ -4,7 +4,7 @@
   import { MODES, lengthOf } from '../../lib/modes.js';
   import { isLocal } from '../../lib/db.js';
 
-  let { s, avatars, qr, url, wins, here } = $props();
+  let { s, avatars, qr, url, wins, here, watching = false } = $props();
 
   const players = $derived(s.order.map((id) => ({ id, ...s.players[id] })));
   const mode = $derived(MODES[s.settings.game]);
@@ -22,6 +22,8 @@
     <div class="bigcode">{s.code}</div>
     {#if isLocal}
       <p class="notice">Local test mode: open the join link in another tab of this browser.</p>
+    {:else if !watching}
+      <p class="muted small remote">Playing from far away? Open <b>{url.split('#')[0]}#/watch/{s.code}</b> to get this screen on your own computer.</p>
     {/if}
   </div>
 
@@ -106,6 +108,7 @@
   .qrwrap { background: #fff; padding: 12px; border-radius: 22px; box-shadow: 0 6px 0 #c9c2d9; }
   .qr { width: 100%; max-width: 250px; display: block; }
   .small { margin: 0; font-size: 0.95rem; word-break: break-all; }
+  .remote { font-size: 0.85rem; max-width: 330px; }
   .bigcode {
     font-family: var(--font-display); font-size: 4.8rem; letter-spacing: 0.14em; line-height: 1; color: #fff;
     background: var(--red); border-radius: 22px; padding: 0.08em 0.3em 0.14em 0.44em;
