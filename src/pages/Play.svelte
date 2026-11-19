@@ -12,6 +12,7 @@
   import DoodlePhone from '../views/phone/DoodlePhone.svelte';
   import PinPhone from '../views/phone/PinPhone.svelte';
   import ClosestPhone from '../views/phone/ClosestPhone.svelte';
+  import TourPhone from '../views/phone/TourPhone.svelte';
   import ScribblePhone from '../views/phone/ScribblePhone.svelte';
   import OddPhone from '../views/phone/OddPhone.svelte';
   import WhoPhone from '../views/phone/WhoPhone.svelte';
@@ -69,7 +70,7 @@
   const isCtrl = $derived(!!s && controllerOf(s) === id);
   const myUnit = $derived(me?.unit || null);
   const unit = $derived(myUnit && s?.units?.[myUnit] ? s.units[myUnit] : null);
-  const game = $derived(s?.settings?.game);
+  const game = $derived(s?.settings?.sub || s?.settings?.game); // Party Tour: the running mini game
   const secs = (until) => Math.max(0, Math.ceil((until - now) / 1000));
 
   function join(e) {
@@ -103,7 +104,7 @@
       if (s.phase === 'answer' && s.current?.buzzer === id) navigator.vibrate?.([80, 40, 80]);
       if (s.phase === 'reveal' && s.current?.result === 'correct' && s.current?.winner === myUnit) { sfx.correct(); navigator.vibrate?.([40, 30, 40, 30, 120]); }
       if (s.phase === 'board' && s.turn === myUnit) navigator.vibrate?.(100);
-      if (['finalBet', 'wq', 'lie', 'pick', 'pguess', 'cguess', 'tguess', 'scwrite', 'scdraw', 'scdesc', 'scvote', 'oclue', 'ovote', 'wwrite', 'wguess', 'rready', 'mdraw'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
+      if (['finalBet', 'wq', 'lie', 'pick', 'pguess', 'cguess', 'tguess', 'troll', 'scwrite', 'scdraw', 'scdesc', 'scvote', 'oclue', 'ovote', 'wwrite', 'wguess', 'rready', 'mdraw'].includes(s.phase)) navigator.vibrate?.([60, 40, 60]);
       if (s.phase === 'dchoose' && s.doodle?.drawer === id) navigator.vibrate?.([100, 50, 100]);
       if (s.phase === 'wreveal' && s.wedge?.winner === myUnit) sfx.correct();
     }
@@ -220,6 +221,8 @@
       <OddPhone {s} {id} {avatars} {send} {now} {react} />
     {:else if game === 'scribble'}
       <ScribblePhone {s} {id} {send} {now} {react} {db} />
+    {:else if game === 'tour'}
+      <TourPhone {s} {myUnit} {send} {now} {react} />
     {:else if game === 'closest'}
       <ClosestPhone {s} {id} {myUnit} {send} {now} {react} />
     {:else if game === 'timeline'}

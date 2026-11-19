@@ -160,7 +160,7 @@ export default {
   reset(s) { s.wedge = null; },
   start(g) {
     const s = g.state;
-    s.wedge = { need: lengthOf(s.settings).need, round: 0, used: {}, lastCat: -1, answers: {}, results: {}, q: null, winner: null };
+    s.wedge = { need: lengthOf(s.settings).need, max: lengthOf(s.settings).max || MAX_ROUNDS, round: 0, used: {}, lastCat: -1, answers: {}, results: {}, q: null, winner: null };
     startSpin(g);
   },
   input(g, from, input) {
@@ -177,7 +177,7 @@ export default {
     else if (s.phase === 'wq' && now >= w.until) reveal(g);
     else if (s.phase === 'wreveal' && now >= w.revealUntil) {
       const done = s.unitOrder.some((u) => Object.keys(s.units[u].wedges).length >= w.need);
-      if (done || w.round >= MAX_ROUNDS) g.finish(rankWedge(s));
+      if (done || w.round >= (w.max || MAX_ROUNDS)) g.finish(rankWedge(s));
       else startSpin(g);
     }
   }

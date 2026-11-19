@@ -58,6 +58,10 @@ export const LINES = {
     "Pin Drop! Look at the photo and stick a pin where you think it is. Geography teachers, this is your moment.",
     "It's Pin Drop! Where in the world are we? Drop your pin and find out!"
   ],
+  intro_tour: [
+    "This is Party Tour! Roll the dice, move around the board, and win mini games along the way.",
+    "Party Tour! A board game made of mini games. Roll well, play better."
+  ],
   intro_closest: [
     "This is Closest Call! Guess the number. Closest guess wins the points.",
     "Closest Call! You don't have to know the answer. Just be closer than your mates."
@@ -415,6 +419,38 @@ export const LINES = {
     "Lightning fast!",
     "What reflexes! Are you even human?",
     "And we have a winner!"
+  ],
+
+  // ---------- Party Tour ----------
+  tourRoll: [
+    "Dice at the ready! Everybody roll!",
+    "Roll the dice! Let's see where fate takes you.",
+    "Phones out, and roll!"
+  ],
+  tourBonus: [
+    "A bonus space! Lucky you!",
+    "Ooh, free points! Don't spend them all at once."
+  ],
+  tourTrap: [
+    "Oh dear, a trap! That's going to sting.",
+    "Ouch! Mind your step next time."
+  ],
+  tourLap: [
+    "Round the board you go! Lap bonus!",
+    "Another lap! Have some points for the journey."
+  ],
+  tourPick_closest: ["Next up, Closest Call! Get your guessing hats on."],
+  tourPick_timeline: ["Next up, Timeline! Put history in order."],
+  tourPick_pindrop: ["Next up, Pin Drop! Where in the world are we?"],
+  tourPick_reflex: ["Next up, Reflex Rumble! Fingers ready!"],
+  tourPick_sketch: ["Next up, Memory Sketch! Eyes on the screen."],
+  tourPick_oddone: ["Next up, Odd One Out! Somebody's a spy."],
+  tourPick_wedge: ["Next up, Wedge Rush! Spin that wheel."],
+  tourPick_board: ["Next up, Brain Board! Buzzers at the ready."],
+  tourScore: [
+    "And that round goes to... well, look at the board!",
+    "Points on the board! Back to the dice.",
+    "Lovely stuff. Back to the tour!"
   ],
 
   hurry: [

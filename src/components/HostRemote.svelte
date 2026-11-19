@@ -6,6 +6,7 @@
   import { WEDGES } from '../content/wedges.js';
   import { photoUrl } from '../engine/pindrop.js';
   import { formatNum, questionById } from '../engine/closest.js';
+  import { MODES } from '../lib/modes.js';
 
   let { s, send, avatars = {} } = $props();
 
@@ -187,6 +188,17 @@
       {#if s.phase === 'cguess'}<p class="muted">{count(c.guesses)} / {players.length} guesses in</p>{/if}
     </div>
     <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'cguess' ? 'Reveal now' : 'Next question'}</button>
+
+  <!-- Party Tour (the board; mini games use their own sections) -->
+  {:else if ['troll', 'tmove', 'tpick', 'tscore'].includes(s.phase) && s.tour}
+    {@const t = s.tour}
+    <div class="card stack center">
+      <div class="bigemoji">🗺️</div>
+      <h3>Round {t.round} of {t.rounds}</h3>
+      {#if s.phase === 'troll'}<p class="muted">{count(t.rolls)} / {s.unitOrder.length} rolled</p>{/if}
+      {#if t.mode}<p>Next game: <b>{MODES[t.mode].icon} {MODES[t.mode].name}</b></p>{/if}
+    </div>
+    <button class="btn ghost block" onclick={() => send('skip')}>{s.phase === 'troll' ? 'Roll for everyone now' : s.phase === 'tmove' ? 'Next move' : s.phase === 'tpick' ? 'Start the game' : 'Next round'}</button>
 
   <!-- Scribble Chain -->
   {:else if ['scwrite', 'scdraw', 'scdesc', 'scshow', 'scvote'].includes(s.phase) && s.chain}

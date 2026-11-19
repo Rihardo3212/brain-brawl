@@ -22,7 +22,7 @@
         <div class="sname">{u.name}</div>
         <div class="spts" class:neg={u.score < 0}>{u.score}</div>
       </div>
-      {#if s.settings.game === 'wedge'}<Pie wedges={u.wedges} size={40} />{/if}
+      {#if (s.settings.sub || s.settings.game) === 'wedge'}<Pie wedges={u.wedges} size={40} />{/if}
     </div>
   {/each}
 </footer>
@@ -33,9 +33,10 @@
     display: flex; align-items: center; gap: 0.7rem; color: #2b2240;
     background: #ffffff;
     box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.35), 0 10px 18px rgba(0, 0, 0, 0.25);
-    border-radius: 999px; padding: 0.35rem 1.2rem 0.35rem 0.4rem; transition: all 0.25s;
-  }
-  .sc.busy { transform: translateY(-7px) scale(1.05); box-shadow: 0 0 0 4px var(--c), 0 0 26px var(--c), 0 6px 16px -6px rgba(0, 0, 0, 0.35); }
+    /* Rounded rectangle whose corners follow the avatar's (30% of 50px + the padding), so the
+       square avatar sits inside the card instead of poking out of a round pill. */
+    border-radius: 22px; padding: 7px 1.2rem 10px 7px; transition: all 0.25s;
+  }  .sc.busy { transform: translateY(-7px) scale(1.05); box-shadow: 0 0 0 4px var(--c), 0 0 26px var(--c), 0 6px 16px -6px rgba(0, 0, 0, 0.35); }
   .sc.out { opacity: 0.4; }
   .sname { font-weight: 800; font-size: 0.95rem; opacity: 0.7; }
   .spts { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; }

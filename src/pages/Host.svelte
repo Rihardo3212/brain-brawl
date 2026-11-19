@@ -13,6 +13,7 @@
   import DoodleStage from '../views/host/DoodleStage.svelte';
   import PinStage from '../views/host/PinStage.svelte';
   import ClosestStage from '../views/host/ClosestStage.svelte';
+  import TourStage from '../views/host/TourStage.svelte';
   import ScribbleStage from '../views/host/ScribbleStage.svelte';
   import OddStage from '../views/host/OddStage.svelte';
   import WhoStage from '../views/host/WhoStage.svelte';
@@ -25,6 +26,7 @@
   import { newRoomCode, joinUrl } from '../lib/room.js';
   import { GameHost } from '../engine/core.js';
   import { MODES } from '../lib/modes.js';
+  import { TOUR_PHASES } from '../engine/tour.js';
   import { WEDGES } from '../content/wedges.js';
   import { topWins } from '../lib/wins.js';
   import { sfx, isMuted, setMuted, unlockAudio, audioReady } from '../lib/sound.js';
@@ -116,13 +118,14 @@
     pguess: 'think', preveal: 'think',
     cguess: 'think', creveal: 'think',
     tguess: 'think', treveal: 'think',
+    troll: 'board', tmove: 'board', tpick: 'board', tscore: 'board',
     scwrite: 'chill', scdraw: 'chill', scdesc: 'chill', scshow: 'chill', scvote: 'chill',
     oclue: 'sneaky', ovote: 'sneaky', oguess: 'sneaky', oresult: 'sneaky',
     wwrite: 'sneaky', wguess: 'sneaky', wshow: 'sneaky',
     rready: 'board', rgo: 'think', rresult: 'board',
     mlook: 'think', mdraw: 'chill', mreveal: 'chill'
   };
-  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal', 'pguess', 'preveal', 'cguess', 'creveal', 'tguess', 'treveal', 'scwrite', 'scdraw', 'scdesc', 'scshow', 'scvote', 'oclue', 'ovote', 'oguess', 'oresult', 'wwrite', 'wguess', 'wshow', 'rready', 'rgo', 'rresult', 'mlook', 'mdraw', 'mreveal']);
+  const STAGE = new Set(['question', 'answer', 'reveal', 'finalBet', 'finalQ', 'finalJudge', 'finalReveal', 'spin', 'wq', 'wreveal', 'lie', 'pick', 'freveal', 'dchoose', 'ddraw', 'dreveal', 'pguess', 'preveal', 'cguess', 'creveal', 'tguess', 'treveal', 'troll', 'tmove', 'tpick', 'tscore', 'scwrite', 'scdraw', 'scdesc', 'scshow', 'scvote', 'oclue', 'ovote', 'oguess', 'oresult', 'wwrite', 'wguess', 'wshow', 'rready', 'rgo', 'rresult', 'mlook', 'mdraw', 'mreveal', 'tpick', 'tscore']);
   const count = (o) => Object.keys(o || {}).length;
 
   function react(a, b) {
@@ -316,6 +319,29 @@
   }
 
   function stepEffects(a, b) {
+    // Party Tour board (phase changes and each move).
+    if (b.tour && TOUR_PHASES.includes(b.phase)) {
+      const t = b.tour;
+      const moved = b.phase === 'tmove' && (a.phase !== 'tmove' || a.tour?.moveIdx !== t.moveIdx);
+      if (b.phase === 'troll' && a.phase !== 'troll') sfx.whoosh();
+      if (b.phase === 'troll' && a.phase === 'troll' && count(t.rolls) > count(a.tour?.rolls)) sfx.bloop();
+      if (moved) {
+        const ev = t.events[t.moveOrder[t.moveIdx]];
+        sfx.pop();
+        if (ev?.lap) setTimeout(() => sfx.rise(), 200);
+        if (ev?.kind === 'bonus') setTimeout(() => { sfx.correct(); fx.confetti(30, ['#ffc400', '#ffffff']); }, 350);
+        if (ev?.kind === 'trap') setTimeout(() => sfx.sadTrombone(), 350);
+      }
+      if (b.phase === 'tpick' && a.phase !== 'tpick' && t.mode) {
+        sfx.drumroll(0.8);
+        setTimeout(() => { sfx.fanfare(); fx.stamp(MODES[t.mode].name.toUpperCase(), MODES[t.mode].color, 'Next game!'); }, 800);
+      }
+      if (b.phase === 'tscore' && a.phase !== 'tscore') {
+        const top = Object.keys(t.place).filter((u) => t.place[u] === 500).map((u) => b.units[u]?.name);
+        if (top.length) { sfx.correct(); fx.stamp('ROUND WON!', '#22c55e', top.join(' & ')); }
+        else sfx.stamp();
+      }
+    }
     const ca = a.current, cb = b.current;
     // Brain Board
     if (b.phase === 'question' && cb?.open && !(ca?.open && a.phase === 'question')) sfx.open();
@@ -394,6 +420,7 @@
       case 'ddraw': return s.doodle?.until;
       case 'pguess': return s.pin?.until;
       case 'cguess': return s.close?.until;
+      case 'troll': return s.tour?.until;
       case 'scwrite': return s.chain?.until;
       case 'scdraw': return s.chain?.until;
       case 'scdesc': return s.chain?.until;
@@ -442,7 +469,7 @@
 
   const here = (pid) => isLocal || !!presence[pid];
   const stage = $derived(!!s && STAGE.has(s.phase));
-  const game = $derived(s?.settings.game);
+  const game = $derived(s?.settings.sub || s?.settings.game); // Party Tour: the running mini game
 </script>
 
 <div class="screen" class:stage>
@@ -500,6 +527,8 @@
     <OddStage {s} {avatars} {now} />
   {:else if game === 'scribble'}
     <ScribbleStage {s} {avatars} {now} {db} />
+  {:else if game === 'tour'}
+    <TourStage {s} {avatars} {now} />
   {:else if game === 'closest'}
     <ClosestStage {s} {avatars} {now} />
   {:else if game === 'timeline'}

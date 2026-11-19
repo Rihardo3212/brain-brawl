@@ -173,6 +173,12 @@ function phase(a, b) {
     case 'rgo': hush(); break;
     case 'rresult': if (chance(0.5)) say(line('reflexWin'), { interrupt: true }); break;
 
+    // Party Tour
+    case 'troll': if (b.tour?.round === 1 || chance(0.4)) say(line('tourRoll'), { interrupt: true }); break;
+    case 'tmove': tourMove(b); break;
+    case 'tpick': if (b.tour?.mode) say(line(`tourPick_${b.tour.mode}`), { interrupt: true }); break;
+    case 'tscore': if (chance(0.5)) say(line('tourScore'), { interrupt: true }); break;
+
     case 'end': {
       const r = b.results;
       if (!r) break;
@@ -187,6 +193,8 @@ function phase(a, b) {
 }
 
 function step(a, b) {
+  // Party Tour: each piece's move.
+  if (b.phase === 'tmove' && b.tour && a.tour && b.tour.moveIdx !== a.tour.moveIdx) tourMove(b);
   // Fake Out reveal: each lie that fooled someone, then the truth.
   if (b.phase === 'freveal' && b.fake && a.fake && b.fake.step > a.fake.step && b.fake.step < b.fake.order.length) {
     const opt = b.fake.options.find((o) => o.id === b.fake.order[b.fake.step]);
@@ -198,8 +206,17 @@ function step(a, b) {
   }
 }
 
+function tourMove(b) {
+  const t = b.tour;
+  const ev = t?.events?.[t.moveOrder?.[t.moveIdx]];
+  if (!ev) return;
+  if (ev.kind === 'trap') say(line('tourTrap'), { interrupt: true, maxWait: 1200 });
+  else if (ev.kind === 'bonus' && chance(0.7)) say(line('tourBonus'), { interrupt: true, maxWait: 1200 });
+  else if (ev.lap && chance(0.6)) say(line('tourLap'), { interrupt: true, maxWait: 1200 });
+}
+
 // Long timed phases where a "hurry up" fits at 5 seconds left.
-const HURRY = new Set(['lie', 'pick', 'ddraw', 'pguess', 'finalBet', 'finalQ', 'wq', 'cguess', 'tguess', 'wwrite', 'oclue', 'ovote', 'scdraw', 'mdraw']);
+const HURRY = new Set(['lie', 'pick', 'ddraw', 'pguess', 'finalBet', 'finalQ', 'wq', 'cguess', 'tguess', 'wwrite', 'oclue', 'ovote', 'scdraw', 'mdraw', 'troll']);
 
 /** Call once when a countdown reaches 5 seconds. */
 export function lewisHurry(s) {

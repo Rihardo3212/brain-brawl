@@ -1,6 +1,33 @@
 // Game modes: names, descriptions and lengths, used by the lobby and the How to play page.
 
 export const MODES = {
+  tour: {
+    id: 'tour',
+    group: 'mix',
+    steps: [
+      { icon: '🎲', label: 'Everyone rolls the dice' },
+      { icon: '🗺️', label: 'Move around the board' },
+      { icon: '👑', label: "The chooser's space picks a mini game" },
+      { icon: '🏆', label: 'Win mini games', tag: '+500' }
+    ],
+    name: 'Party Tour',
+    icon: '🗺️',
+    color: '#22c55e',
+    tagline: 'A board game of mini games.',
+    how: [
+      'Everyone rolls the dice on their phone at the same time, and the pieces move around the board.',
+      "Each round one player (or team) is the chooser: the space they land on picks the next mini game.",
+      'Mini games are short rounds of the other modes. 1st place gets +500, 2nd +300, 3rd +200, 4th +100.',
+      '⭐ spaces give +300, 💀 spaces take 200, and passing START gives +400. Most points at the end wins!'
+    ],
+    min: 1,
+    hostRole: 'The host keeps the tour moving and can skip ahead.',
+    lengths: {
+      quick: { label: 'Quick', detail: '6 rounds · ~18 min', rounds: 6 },
+      full: { label: 'Full', detail: '12 rounds · ~40 min', rounds: 12 },
+      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true }
+    }
+  },
   board: {
     id: 'board',
     group: 'trivia',
@@ -25,7 +52,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '4 × 4 board + final · ~15 min', cats: 4, rows: 4 },
       full: { label: 'Full', detail: '6 × 5 board + final · ~30 min', cats: 6, rows: 5 },
-      tiny: { label: 'Tiny', detail: 'test board', cats: 2, rows: 1, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test board', cats: 2, rows: 1, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', cats: 2, rows: 2, noFinal: true, hidden: true }
     }
   },
   wedge: {
@@ -52,7 +80,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: 'First to 4 wedges · ~10 min', need: 4 },
       full: { label: 'Full', detail: 'Collect all 6 wedges · ~20 min', need: 6 },
-      tiny: { label: 'Tiny', detail: 'test', need: 1, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', need: 1, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', need: 99, max: 3, hidden: true }
     }
   },
   fakeout: {
@@ -134,7 +163,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '5 photos · ~8 min', mix: [2, 2, 1] },
       full: { label: 'Full', detail: '10 photos · ~15 min', mix: [3, 4, 3] },
-      tiny: { label: 'Tiny', detail: 'test', mix: [1, 0, 0], hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', mix: [1, 0, 0], hidden: true },
+      tour: { label: 'Tour', detail: 'tour', mix: [1, 1, 0], hidden: true }
     }
   },
   closest: {
@@ -161,7 +191,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '6 questions · ~6 min', rounds: 6 },
       full: { label: 'Full', detail: '10 questions · ~10 min', rounds: 10 },
-      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', rounds: 3, hidden: true }
     }
   },
   timeline: {
@@ -188,7 +219,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '6 rounds · ~6 min', rounds: 6 },
       full: { label: 'Full', detail: '10 rounds · ~10 min', rounds: 10 },
-      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', rounds: 2, hidden: true }
     }
   },
   sketch: {
@@ -215,7 +247,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '5 drawings · ~5 min', rounds: 5 },
       full: { label: 'Full', detail: '8 drawings · ~8 min', rounds: 8 },
-      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', rounds: 2, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', rounds: 2, hidden: true }
     }
   },
   reflex: {
@@ -242,7 +275,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '8 games · ~4 min', rounds: 8 },
       full: { label: 'Full', detail: '15 games · ~8 min', rounds: 15 },
-      tiny: { label: 'Tiny', detail: 'test', rounds: 4, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', rounds: 4, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', rounds: 3, hidden: true }
     }
   },
   oddone: {
@@ -269,7 +303,8 @@ export const MODES = {
     lengths: {
       quick: { label: 'Quick', detail: '4 rounds · ~8 min', rounds: 4 },
       full: { label: 'Full', detail: '7 rounds · ~14 min', rounds: 7 },
-      tiny: { label: 'Tiny', detail: 'test', rounds: 1, hidden: true }
+      tiny: { label: 'Tiny', detail: 'test', rounds: 1, hidden: true },
+      tour: { label: 'Tour', detail: 'tour', rounds: 1, hidden: true }
     }
   },
   scribble: {
@@ -328,10 +363,11 @@ export const MODES = {
   }
 };
 
-export const MODE_LIST = ['board', 'wedge', 'fakeout', 'pindrop', 'closest', 'timeline', 'whowrote', 'oddone', 'doodle', 'scribble', 'sketch', 'reflex'];
+export const MODE_LIST = ['tour', 'board', 'wedge', 'fakeout', 'pindrop', 'closest', 'timeline', 'whowrote', 'oddone', 'doodle', 'scribble', 'sketch', 'reflex'];
 
 // Mode groups for the picker, home page and How to play page.
 export const GROUPS = [
+  { id: 'mix', label: 'Mix', icon: '🎲' },
   { id: 'trivia', label: 'Trivia', icon: '🧠' },
   { id: 'social', label: 'Social', icon: '💬' },
   { id: 'drawing', label: 'Drawing', icon: '✏️' },
@@ -355,6 +391,8 @@ export const EXTRAS = [
 ];
 
 export function lengthOf(settings) {
+  // Party Tour runs one short round of another mode at a time.
+  if (settings.game === 'tour' && settings.sub && MODES[settings.sub]?.lengths.tour) return MODES[settings.sub].lengths.tour;
   const m = MODES[settings.game] || MODES.board;
   return m.lengths[settings.length] || m.lengths.quick;
 }

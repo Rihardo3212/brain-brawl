@@ -18,6 +18,7 @@ import fakeout from './fakeout.js';
 import doodle from './doodle.js';
 import pindrop from './pindrop.js';
 import closest from './closest.js';
+import tour, { setEngines } from './tour.js';
 import scribble from './scribble.js';
 import oddone from './oddone.js';
 import whowrote from './whowrote.js';
@@ -25,7 +26,8 @@ import reflex from './reflex.js';
 import sketch from './sketch.js';
 import timeline from './timeline.js';
 
-export const ENGINES = { board, wedge, fakeout, doodle, pindrop, closest, timeline, scribble, oddone, whowrote, reflex, sketch };
+export const ENGINES = { board, wedge, fakeout, doodle, pindrop, closest, timeline, tour, scribble, oddone, whowrote, reflex, sketch };
+setEngines(ENGINES);
 export const TEAM_DRAW_TIME = 45000;
 export const INTRO_TIME = 14000; // how-to-play screen before each game
 

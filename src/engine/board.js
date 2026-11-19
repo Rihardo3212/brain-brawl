@@ -34,7 +34,7 @@ function newBoard(g) {
   for (let c = 0; c < cats.length; c++) {
     for (let r = 0; r < len.rows; r++) q[`${c}-${r}`] = pick(questionsForTier(cats[c].id, r));
   }
-  s.board = { cats: cats.map((c) => ({ id: c.id, name: c.name, icon: c.icon })), rows: len.rows, used: {}, q };
+  s.board = { cats: cats.map((c) => ({ id: c.id, name: c.name, icon: c.icon })), rows: len.rows, used: {}, q, noFinal: !!len.noFinal };
   s.turn = pick(s.unitOrder);
   s.current = null;
   s.final = null;
@@ -334,7 +334,7 @@ export default {
         if (cur && now >= cur.revealUntil) {
           s.board.used[`${cur.c}-${cur.r}`] = true;
           s.current = null;
-          if (Object.keys(s.board.used).length >= s.board.cats.length * s.board.rows) startFinal(g);
+          if (Object.keys(s.board.used).length >= s.board.cats.length * s.board.rows) { if (s.board.noFinal) g.finish(); else startFinal(g); }
           else { s.phase = 'board'; save(g); }
         }
         break;
