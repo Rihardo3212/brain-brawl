@@ -138,7 +138,7 @@ export class GameHost {
     const saved = resume ? await this.db.get(this.path('state')) : null;
     this.state = normalize(saved) || newLobbyState(this.code);
     if (!saved) {
-      for (const p of ['inputs', 'avatars', 'teamdraw', 'doodle', 'sketch', 'chain']) await this.db.remove(this.path(p));
+      for (const p of ['inputs', 'avatars', 'teamdraw', 'doodle', 'sketch', 'chain', 'reacts']) await this.db.remove(this.path(p));
     }
     await this.save();
     this.unsubs.push(this.db.onValue(this.path('presence'), (p) => {
@@ -252,7 +252,10 @@ export class GameHost {
         const t = Date.now();
         if (t - (this.lastReact[from] || 0) < 350) return;
         this.lastReact[from] = t;
-        this.onReact({ from, e: input.e, color: p?.color || '#888' });
+        const r = { from, e: input.e, color: p?.color || '#888' };
+        this.onReact(r);
+        // Watch screens (#/watch/CODE) can't see inputs, so mirror reactions for them.
+        this.db.push(this.path('reacts'), { ...r, t: Date.now() });
         return;
       }
       default:

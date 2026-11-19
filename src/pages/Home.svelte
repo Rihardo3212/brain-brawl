@@ -15,6 +15,10 @@
     unlockAudio();
     if (cleanCode(code).length === 4) location.hash = `#/join/${cleanCode(code)}`;
   }
+  function watchRoom() {
+    unlockAudio();
+    if (cleanCode(code).length === 4) location.hash = `#/watch/${cleanCode(code)}`;
+  }
 </script>
 
 <button class="icon-btn theme" onclick={() => (theme = toggleTheme())} aria-label="Theme">{theme === 'dark' ? '☀️' : '🌙'}</button>
@@ -38,6 +42,10 @@
         <input class="field code" placeholder="ABCD" maxlength="4" autocapitalize="characters" autocomplete="off" bind:value={code} oninput={() => (code = cleanCode(code))} />
         <button class="btn blue big block" disabled={code.length !== 4}>Join</button>
       </form>
+      {#if !isLocal}
+        <button class="btn ghost block" disabled={code.length !== 4} onclick={watchRoom}>📺 Show the big screen here</button>
+        <p class="muted hint">Playing remotely? Open this on your computer, and join with your phone.</p>
+      {/if}
     </section>
   </div>
 
@@ -77,6 +85,7 @@
   .emoji { font-size: 2.8rem; filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.25)); }
   form { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; }
   .code { letter-spacing: 0.4em; text-transform: uppercase; }
+  .hint { font-size: 0.85rem; margin: 0; }
   .ghead { margin: 0.4rem 0 -0.6rem; font-size: 1.5rem; width: 100%; text-align: left; }
   .modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.9rem; width: 100%; }
   .mode { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.1rem 0.8rem; }

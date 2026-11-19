@@ -1,5 +1,6 @@
 <script>
   // The big screen: runs the game engine and shows the room.
+  // With `watch` set (#/watch/CODE) it only mirrors another big screen's room, for friends playing remotely.
   import { onMount, onDestroy } from 'svelte';
   import QRCode from 'qrcode';
   import Logo from '../components/Logo.svelte';
@@ -22,8 +23,8 @@
   import EndView from '../views/host/EndView.svelte';
   import ScoreBar from '../views/host/ScoreBar.svelte';
   import { getDb, isLocal } from '../lib/db.js';
-  import { newRoomCode, joinUrl } from '../lib/room.js';
-  import { GameHost } from '../engine/core.js';
+  import { newRoomCode, joinUrl, cleanCode } from '../lib/room.js';
+  import { GameHost, normalize } from '../engine/core.js';
   import { MODES } from '../lib/modes.js';
   import { WEDGES } from '../content/wedges.js';
   import { topWins } from '../lib/wins.js';
@@ -37,7 +38,9 @@
   import { lewisReact, lewisHurry } from '../lib/presenter-cues.js';
   import { fit } from '../lib/fit.js';
 
-  let { arg = '' } = $props();
+  let { arg = '', watch = '' } = $props();
+  const watching = !!watch;
+  let lost = $state(false); // watch mode: no room with that code
 
   let s = $state(null);
   let presence = $state({});
@@ -86,9 +89,34 @@
     if (allowTiny && host.state.phase === 'lobby') { host.state.settings.length = 'tiny'; host.save(); }
   }
 
+  // Watch mode: no engine here, just follow the room's state like a phone does.
+  let watchUnsubs = [];
+  async function openWatch() {
+    const code = cleanCode(watch);
+    url = joinUrl(code);
+    qr = await QRCode.toDataURL(url, { margin: 1, width: 420, color: { dark: '#1b1530', light: '#ffffff' } });
+    const opened = Date.now();
+    watchUnsubs = [
+      db.onValue(`rooms/${code}/state`, (raw) => {
+        if (!raw) { lost = true; return; }
+        const st = normalize(raw); // the database drops empty lists, put them back
+        lost = false;
+        react(prev, st);
+        prev = st;
+        s = st;
+      }),
+      db.onValue(`rooms/${code}/presence`, (pr) => (presence = { ...(pr || {}) })),
+      db.onValue(`rooms/${code}/avatars`, (a) => (avatars = a || {})),
+      db.onChildAdded(`rooms/${code}/reacts`, (_k, r) => {
+        if (r && r.t > opened - 2000 && r.t > Date.now() - 4000) { fx.react(r.e, r.color); sfx.react(); }
+      })
+    ];
+  }
+
   onMount(async () => {
     db = await getDb();
-    await openRoom(true);
+    if (watching) await openWatch();
+    else await openRoom(true);
     clock = setInterval(() => {
       now = db.now();
       countdownTicks();
@@ -99,6 +127,7 @@
   onDestroy(() => {
     host?.stop();
     unsubAvatars?.();
+    watchUnsubs.forEach((u) => u && u());
     clearInterval(clock);
     stopMusic();
     hush();
@@ -456,6 +485,7 @@
     {#if s}
       <span class="sticker code">Room <b>{s.code}</b></span>
       <span class="pill mode">{s.mode === 'host' ? `🎤 Host: ${s.hostName}` : '🎉 Party mode'}</span>
+      {#if watching}<span class="pill mode">👀 Watching</span>{/if}
     {/if}
     <div class="right">
       {#if !soundOn}
@@ -465,15 +495,19 @@
       <button class="icon-btn" class:off={!lewis.on} onclick={() => { unlockAudio(); setLewisOn(!lewis.on); }} aria-label="Lewis the presenter" title="Lewis, the presenter">🎙️</button>
       <button class="icon-btn" class:off={!music} onclick={toggleMusic} aria-label="Music" title="Music">🎵</button>
       <button class="icon-btn" onclick={toggleSfx} aria-label="Sound effects" title="Sound effects">{muted ? '🔇' : '🔊'}</button>
-      <button class="icon-btn" onclick={newRoom} aria-label="New room" title="New room">↻</button>
+      {#if !watching}
+        <button class="icon-btn" onclick={newRoom} aria-label="New room" title="New room">↻</button>
+      {/if}
     </div>
   </header>
 
   <div class="fit-box" use:fit={{ min: 0.45 }}><div class="fit-in">
-  {#if !s}
-    <div class="center"><h2>Opening room…</h2></div>
+  {#if lost}
+    <div class="center"><div class="lost"><h2>No room {cleanCode(watch)} right now</h2><p class="muted">Check the code on the big screen. This page updates by itself once the room is open.</p><a class="btn" href="#/">Home</a></div></div>
+  {:else if !s}
+    <div class="center"><h2>{watching ? 'Connecting to the big screen…' : 'Opening room…'}</h2></div>
   {:else if s.phase === 'lobby'}
-    <LobbyView {s} {avatars} {qr} {url} {wins} {here} />
+    <LobbyView {s} {avatars} {qr} {url} {wins} {here} {watching} />
   {:else if s.phase === 'teamdraw'}
     <TeamDrawView {s} {avatars} {db} {now} />
   {:else if s.phase === 'intro'}
@@ -551,6 +585,7 @@
   .code b { color: var(--red); letter-spacing: 0.14em; }
   .right { margin-left: auto; display: flex; gap: 0.55rem; align-items: center; }
   .center { flex: 1; display: grid; place-items: center; }
+  .lost { text-align: center; display: grid; gap: 0.8rem; justify-items: center; }
   .fit-box { overflow: hidden; } /* nobody scrolls a TV: content is zoomed to fit instead */
   .stage .pill { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: none; }
   .stage .footer { color: rgba(255, 255, 255, 0.6); }

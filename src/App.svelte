@@ -20,6 +20,10 @@
 
 {#if route.page === 'host'}
   <Host arg={route.arg} />
+{:else if route.page === 'watch'}
+  {#key route.arg}
+    <Host watch={route.arg} />
+  {/key}
 {:else if route.page === 'join'}
   {#key route.arg}
     <Play code={route.arg} />
